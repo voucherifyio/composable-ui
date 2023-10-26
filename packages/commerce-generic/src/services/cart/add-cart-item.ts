@@ -2,9 +2,10 @@ import { CommerceService } from '@composable/types'
 import {
   generateCartItem,
   getCart,
+  saveCart,
   calculateCartSummary,
+  generateEmptyCart,
 } from '../../data/cartDataInMemory'
-import cart from '../../data/cart.json'
 
 export const addCartItem: CommerceService['addCartItem'] = async ({
   cartId,
@@ -12,13 +13,7 @@ export const addCartItem: CommerceService['addCartItem'] = async ({
   quantity,
   variantId,
 }) => {
-  const cart = getCart(cartId)
-
-  if (!cart) {
-    throw new Error(
-      `[addCartItem] Could not found cart with requested cart id: ${cartId}`
-    )
-  }
+  const cart = getCart(cartId) || generateEmptyCart(cartId)
 
   const isProductInCartAlready = cart.items.some(
     (item) => item.id === productId
@@ -32,7 +27,5 @@ export const addCartItem: CommerceService['addCartItem'] = async ({
   }
   cart.summary = calculateCartSummary(cart.items)
 
-  return {
-    ...cart,
-  }
+  return saveCart(cart)
 }

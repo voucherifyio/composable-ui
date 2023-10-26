@@ -22,8 +22,8 @@ export const deleteCart = (cartId: string) => {
   return cartsData.delete(cartId)
 }
 
-export const generateEmptyCart = (): Cart => ({
-  id: randomUUID(),
+export const generateEmptyCart = (cartId?: string): Cart => ({
+  id: cartId || randomUUID(),
   items: [],
   summary: {},
 })
