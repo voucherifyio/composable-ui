@@ -1,6 +1,6 @@
 import { CommerceService } from '@composable/types'
-import cart from '../../data/cart.json'
+import { generateEmptyCart, saveCart } from '../../data/cartDataInMemory'
 
 export const createCart: CommerceService['createCart'] = async () => {
-  return cart
+  return saveCart(generateEmptyCart())
 }
