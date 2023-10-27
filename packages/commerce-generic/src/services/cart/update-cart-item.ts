@@ -3,7 +3,7 @@ import {
   getCart,
   saveCart,
   calculateCartSummary,
-} from '../../data/cartDataInMemory'
+} from '../../data/cart-data-in-memory'
 
 export const updateCartItem: CommerceService['updateCartItem'] = async ({
   cartId,

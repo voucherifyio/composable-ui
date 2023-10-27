@@ -5,7 +5,7 @@ import {
   saveCart,
   calculateCartSummary,
   generateEmptyCart,
-} from '../../data/cartDataInMemory'
+} from '../../data/cart-data-in-memory'
 
 export const addCartItem: CommerceService['addCartItem'] = async ({
   cartId,
