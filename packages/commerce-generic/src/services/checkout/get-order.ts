@@ -4,7 +4,7 @@ import order from '../../data/order.json'
 import shippingMethods from '../../data/shipping-methods.json'
 
 export const getOrder: CommerceService['getOrder'] = async ({ orderId }) => {
-  const order = getOrerFromStorage(orderId)
+  const order = await getOrerFromStorage(orderId)
 
   if (!order) {
     throw new Error(`[getOrder] Could not found order: ${orderId}`)

@@ -9,7 +9,7 @@ export const deleteCartItem: CommerceService['deleteCartItem'] = async ({
   cartId,
   productId,
 }) => {
-  const cart = getCart(cartId)
+  const cart = await getCart(cartId)
 
   if (!cart) {
     throw new Error(

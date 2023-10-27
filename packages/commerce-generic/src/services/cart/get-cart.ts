@@ -6,5 +6,5 @@ export const getCart: CommerceService['getCart'] = async ({ cartId }) => {
     return null
   }
 
-  return getCartFromStorage(cartId) || null
+  return (await getCartFromStorage(cartId)) || null
 }

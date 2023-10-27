@@ -1,25 +1,62 @@
 import products from './products.json'
 import { Cart, CartItem } from '@composable/types'
 import { randomUUID } from 'crypto'
+import { promises as fs } from 'fs'
+import path from 'path'
+import os from 'os'
 
 const findProductById = (id: string) => {
   return products.find((product) => product.id === id) ?? products[0]
 }
 
-// In memory storage for carts data
-const cartsData: Map<string, Cart> = new Map()
+const storageFilePath = path.join(
+  os.tmpdir(),
+  'composable-ui-temp-cart-storage.json'
+)
 
-export const getCart = (cartId: string): Cart | undefined => {
+console.log({ storageFilePath })
+
+const fileExist = async (filePath: string) => {
+  try {
+    await fs.access(filePath)
+    return true
+  } catch (e) {
+    console.log(`[cartDataInMemory] File ${storageFilePath} does not exists`)
+    return false
+  }
+}
+
+const getMapFromFile = async () => {
+  if (!(await fileExist(storageFilePath))) {
+    return new Map<string, Cart>()
+  }
+  const buffer = await fs.readFile(storageFilePath)
+  const map = new Map<string, Cart>(JSON.parse(buffer.toString()))
+  console.log({ map })
+  return map
+}
+const saveMapToFile = async (map: Map<string, Cart>) => {
+  await fs.writeFile(storageFilePath, JSON.stringify(Array.from(map.entries())))
+  return map
+}
+
+export const getCart = async (cartId: string): Promise<Cart | undefined> => {
+  const cartsData = await getMapFromFile()
   return cartsData.get(cartId)
 }
 
-export const saveCart = (cart: Cart) => {
+export const saveCart = async (cart: Cart) => {
+  const cartsData = await getMapFromFile()
   cartsData.set(cart.id, cart)
+  await saveMapToFile(cartsData)
   return cart
 }
 
-export const deleteCart = (cartId: string) => {
-  return cartsData.delete(cartId)
+export const deleteCart = async (cartId: string) => {
+  const cartsData = await getMapFromFile()
+  const deleteResult = cartsData.delete(cartId)
+  await saveMapToFile(cartsData)
+  return deleteResult
 }
 
 export const generateEmptyCart = (cartId?: string): Cart => ({

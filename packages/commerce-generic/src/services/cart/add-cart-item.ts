@@ -13,7 +13,7 @@ export const addCartItem: CommerceService['addCartItem'] = async ({
   quantity,
   variantId,
 }) => {
-  const cart = getCart(cartId) || generateEmptyCart(cartId)
+  const cart = (await getCart(cartId)) || generateEmptyCart(cartId)
 
   const isProductInCartAlready = cart.items.some(
     (item) => item.id === productId

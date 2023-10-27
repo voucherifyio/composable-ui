@@ -10,7 +10,7 @@ export const updateCartItem: CommerceService['updateCartItem'] = async ({
   productId,
   quantity,
 }) => {
-  const cart = getCart(cartId)
+  const cart = await getCart(cartId)
 
   if (!cart) {
     throw new Error(
