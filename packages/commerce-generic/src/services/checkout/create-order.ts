@@ -1,7 +1,37 @@
-import { CommerceService } from '@composable/types'
-import { getCart } from '../../data/cart-data-in-memory'
-import { generateOrder, saveOrder } from '../../data/oder-data-in-memory'
+import { Cart, CheckoutInput, CommerceService, Order } from '@composable/types'
+import { getCart } from '../../data/persit'
+import { saveOrder } from '../../data/persit'
 import shippingMethods from '../../data/shipping-methods.json'
+import { randomUUID } from 'crypto'
+
+const generateOrderFromCart = (
+  cart: Cart,
+  checkoutInput: CheckoutInput
+): Order => {
+  return {
+    id: randomUUID(),
+    status: 'complete',
+    payment: 'unpaid',
+    shipping: 'unfulfilled',
+    customer: {
+      email: checkoutInput.customer.email,
+    },
+    shipping_address: {
+      phone_number: '',
+      city: '',
+      ...checkoutInput.shipping_address,
+    },
+    billing_address: {
+      phone_number: '',
+      city: '',
+      ...checkoutInput.billing_address,
+    },
+    shipping_method: shippingMethods[0],
+    created_at: Date.now(),
+    items: cart.items,
+    summary: cart.summary,
+  }
+}
 
 export const createOrder: CommerceService['createOrder'] = async ({
   checkout,
@@ -14,5 +44,5 @@ export const createOrder: CommerceService['createOrder'] = async ({
     )
   }
 
-  return saveOrder(generateOrder(cart, checkout))
+  return saveOrder(generateOrderFromCart(cart, checkout))
 }

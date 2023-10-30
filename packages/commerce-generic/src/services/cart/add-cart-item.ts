@@ -1,11 +1,10 @@
 import { CommerceService } from '@composable/types'
+import { getCart, saveCart } from '../../data/persit'
 import {
   generateCartItem,
-  getCart,
-  saveCart,
   calculateCartSummary,
   generateEmptyCart,
-} from '../../data/cart-data-in-memory'
+} from '../../data/generate-cart-data'
 
 export const addCartItem: CommerceService['addCartItem'] = async ({
   cartId,
