@@ -6,9 +6,9 @@ import {
   VoucherifyServerSide,
 } from '@voucherify/sdk'
 import {
-  getRedeemmablesForValidation,
-  getRedeemmablesForValidationFromPromotions,
-} from '../data/get-redeemmables-for-validation'
+  getRedeemablesForValidation,
+  getRedeemablesForValidationFromPromotions,
+} from '../data/get-redeemables-for-validation'
 import { cartToVoucherifyOrder } from './cart-to-voucherify-order'
 
 type ValidateDiscountsParam = {
@@ -43,8 +43,8 @@ export const validateCouponsAndPromotions = async (
 
   const validationResult = await voucherify.validations.validateStackable({
     redeemables: [
-      ...getRedeemmablesForValidation(codes),
-      ...getRedeemmablesForValidationFromPromotions(promotionsResult),
+      ...getRedeemablesForValidation(codes),
+      ...getRedeemablesForValidationFromPromotions(promotionsResult),
     ],
     order,
     options: { expand: ['order'] },

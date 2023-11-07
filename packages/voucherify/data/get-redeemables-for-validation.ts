@@ -1,12 +1,12 @@
 import { PromotionsValidateResponse } from '@voucherify/sdk'
 
-export const getRedeemmablesForValidation = (couponCodes: string[]) =>
+export const getRedeemablesForValidation = (couponCodes: string[]) =>
   couponCodes.map((couponCode) => ({
     id: couponCode,
     object: 'voucher' as const,
   }))
 
-export const getRedeemmablesForValidationFromPromotions = (
+export const getRedeemablesForValidationFromPromotions = (
   promotionResult: PromotionsValidateResponse
 ) =>
   promotionResult.promotions?.map((promotion) => ({
