@@ -125,7 +125,7 @@ export const OrderSummary = ({
             id: 'cart.summary.totalDiscountAmount',
           })}
           totalDiscountAmount={intl.formatNumber(
-            parseFloat(_cartData?.summary?.totalDiscountAmount ?? '0'),
+            parseFloat(_cartData?.summary?.totalDiscountAmount || '0'),
             currencyFormatConfig
           )}
         />
