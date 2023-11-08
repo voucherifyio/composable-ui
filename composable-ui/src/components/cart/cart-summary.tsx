@@ -15,7 +15,7 @@ import {
 import { CartSummaryItem } from '.'
 import { CartPromotions } from './cart-promotions'
 
-interface CartSummaryProps {
+export interface CartSummaryProps {
   rootProps?: StackProps
   renderCheckoutButton?: boolean
   cartData?: CartData

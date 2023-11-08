@@ -3,50 +3,53 @@ import { useIntl } from 'react-intl'
 import { useCart } from 'hooks'
 import { CartDrawerSummaryItem } from './cart-drawer-summary-item'
 import { Price } from '../../price'
+import { CartSummaryItem } from '../cart-summary-item'
+import { CartSummaryProps } from '../cart-summary'
 
-export const CartDrawerSummary = () => {
+export const CartDrawerSummary = ({ cartData }: CartSummaryProps) => {
   const { cart } = useCart()
   const intl = useIntl()
+  const _cartData = cartData ?? cart
 
   return (
     <Box>
       <Divider m={'10px 0'} />
 
-      {cart.summary?.subtotalPrice && (
+      {_cartData.summary?.subtotalPrice && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.subtotal' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={cart.summary.subtotalPrice}
+            price={_cartData.summary.subtotalPrice}
           />
         </CartDrawerSummaryItem>
       )}
 
-      {cart.summary?.taxes && (
+      {_cartData.summary?.taxes && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.taxes' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={cart.summary.taxes}
+            price={_cartData.summary.taxes}
           />
         </CartDrawerSummaryItem>
       )}
 
-      {cart.summary?.shipping && (
+      {_cartData.summary?.shipping && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.shipping' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={cart.summary.shipping}
+            price={_cartData.summary.shipping}
           />
         </CartDrawerSummaryItem>
       )}
       <Divider m={'10px 0'} />
 
-      {cart.summary?.totalPrice && (
+      {_cartData.summary?.totalPrice && (
         <>
           <Flex
             justify="space-between"
@@ -58,8 +61,36 @@ export const CartDrawerSummary = () => {
             <Box>
               <Price
                 rootProps={{ textStyle: 'Desktop/S' }}
-                price={cart.summary.totalPrice}
+                price={_cartData.summary.totalPrice}
               />
+            </Box>
+          </Flex>
+        </>
+      )}
+
+      {_cartData.summary?.totalDiscountAmount && (
+        <CartSummaryItem
+          label={intl.formatMessage({
+            id: 'cart.summary.totalDiscountAmount',
+          })}
+        >
+          <Price
+            rootProps={{ textStyle: 'Body-S', color: 'green' }}
+            price={`-${_cartData.summary.totalDiscountAmount}`}
+          />
+        </CartSummaryItem>
+      )}
+
+      {_cartData.summary?.grandPrice && (
+        <>
+          <Divider />
+          <Flex
+            justify="space-between"
+            textStyle={{ base: 'Mobile/S', md: 'Desktop/S' }}
+          >
+            <Text>{intl.formatMessage({ id: 'cart.summary.grandPrice' })}</Text>
+            <Box>
+              <Price price={_cartData.summary.grandPrice} />
             </Box>
           </Flex>
         </>

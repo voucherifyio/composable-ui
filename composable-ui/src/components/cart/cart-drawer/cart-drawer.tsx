@@ -17,13 +17,15 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { APP_CONFIG } from '../../../utils/constants'
-import { CartLoadingState } from '../.'
+import { CartLoadingState, CartSummaryProps } from '../.'
 import { CartDrawerFooter } from './cart-drawer-footer'
 import { CartDrawerSummary } from './cart-drawer-summary'
 import { CartDrawerEmptyState } from './cart-drawer-empty-state'
 import { HorizontalProductCard } from '@composable/ui'
+import { CouponForm } from '../../forms/coupon-form'
+import { CartPromotions } from '../cart-promotions'
 
-export const CartDrawer = () => {
+export const CartDrawer = ({ cartData }: CartSummaryProps) => {
   const intl = useIntl()
   const toast = useToast()
   const router = useRouter()
@@ -38,6 +40,8 @@ export const CartDrawer = () => {
     },
   })
 
+  const _cartData = cartData ?? cart
+
   const title = intl.formatMessage(
     { id: 'cart.drawer.titleCount' },
     { count: cart.quantity }
@@ -46,6 +50,11 @@ export const CartDrawer = () => {
     currency: APP_CONFIG.CURRENCY_CODE,
     style: 'currency',
   }
+
+  const promotions =
+    _cartData.redeemables?.filter(
+      (redeemable) => redeemable.object === 'promotion_tier'
+    ) || []
 
   useEffect(() => {
     router.events.on('routeChangeStart', cartDrawer.onClose)
@@ -148,6 +157,8 @@ export const CartDrawer = () => {
                   )
                 })}
               </Stack>
+              <CartPromotions promotions={promotions} />
+              <CouponForm />
               <CartDrawerSummary />
             </Stack>
           )}

@@ -11,12 +11,14 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+import { CartSummaryProps } from '../cart-summary'
 
-export const CartDrawerFooter = () => {
+export const CartDrawerFooter = ({ cartData }: CartSummaryProps) => {
   const router = useRouter()
   const { cartDrawer } = useComposable()
   const { cart } = useCart()
   const intl = useIntl()
+  const _cartData = cartData ?? cart
 
   return (
     <Stack spacing="6" width="full">
@@ -33,7 +35,7 @@ export const CartDrawerFooter = () => {
           <Box>
             <Price
               rootProps={{ textStyle: { base: 'Mobile/XS', md: 'Desktop/M' } }}
-              price={cart.summary?.totalPrice ?? ''}
+              price={_cartData.summary?.grandPrice ?? ''}
             />
           </Box>
         </VStack>

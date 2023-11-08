@@ -9,6 +9,8 @@ interface OrderTotalsProps {
   discount?: string
   totalTitle?: string
   total: string
+  totalDiscountAmountTitle?: string
+  totalDiscountAmount?: string
 }
 
 export const OrderTotals = ({
@@ -16,9 +18,10 @@ export const OrderTotals = ({
   deliveryTitle,
   delivery,
   tax,
-  discount,
   totalTitle,
   total,
+  totalDiscountAmountTitle,
+  totalDiscountAmount,
 }: OrderTotalsProps) => {
   const intl = useIntl()
 
@@ -47,11 +50,11 @@ export const OrderTotals = ({
           label={intl.formatMessage({ id: 'cart.summary.tax' })}
           value={tax}
         />
-        {discount && (
+        {totalDiscountAmount && (
           <CartSummaryItem
             isDiscount
-            label={intl.formatMessage({ id: 'cart.summary.discount' })}
-            value={discount}
+            label={totalDiscountAmountTitle ?? ''}
+            value={totalDiscountAmount}
           />
         )}
       </Stack>
