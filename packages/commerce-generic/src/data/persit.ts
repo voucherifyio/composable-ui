@@ -13,7 +13,10 @@ export const getOrder = async (orderId: string): Promise<Order | undefined> => {
   return storage.getItem(`order-${orderId}`)
 }
 
-export const saveOrder = async (order: Order) => {
+export const saveOrder = async (order: Order | null) => {
+  if (!order) {
+    return null
+  }
   await storage.setItem(`order-${order.id}`, order)
   return order
 }

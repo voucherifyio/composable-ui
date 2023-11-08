@@ -1,4 +1,10 @@
-import { CommerceService, Cart, CartItem } from '../commerce'
+import {
+  CommerceService,
+  Cart,
+  CartItem,
+  CheckoutInput,
+  Order,
+} from '../commerce'
 import { CartWithDiscounts } from './cart-with-discounts'
 import { OrderWithDiscounts } from './order-with-discounts'
 
@@ -29,7 +35,7 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
     coupon: string
     cartId: string
   }): Promise<CartWithDiscounts>
-  createOrder(
-    ...params: Parameters<CommerceService['createOrder']>
-  ): Promise<OrderWithDiscounts>
+  createOrder(params: {
+    checkout: CheckoutInput
+  }): Promise<OrderWithDiscounts | null>
 }
