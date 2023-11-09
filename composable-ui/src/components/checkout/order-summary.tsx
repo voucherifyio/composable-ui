@@ -122,10 +122,10 @@ export const OrderSummary = ({
             currencyFormatConfig
           )}
           totalDiscountAmountTitle={intl.formatMessage({
-            id: '_cartData.summary.totalDiscountAmount',
+            id: 'cart.summary.totalDiscountAmount',
           })}
           totalDiscountAmount={intl.formatNumber(
-            parseFloat(_cartData?.summary?.totalDiscountAmount ?? '0'),
+            parseFloat(_cartData?.summary?.totalDiscountAmount || '0'),
             currencyFormatConfig
           )}
         />
