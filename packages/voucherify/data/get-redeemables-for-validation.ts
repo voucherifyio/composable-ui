@@ -6,6 +6,12 @@ export const getRedeemablesForValidation = (couponCodes: string[]) =>
     object: 'voucher' as const,
   }))
 
+export const getRedeemablesForRedemption = (couponCodes: string[]) =>
+  couponCodes.map((couponCode) => ({
+    id: couponCode,
+    object: 'voucher' as const,
+  }))
+
 export const getRedeemablesForValidationFromPromotions = (
   promotionResult: PromotionsValidateResponse
 ) =>

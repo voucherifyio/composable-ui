@@ -24,6 +24,17 @@ export const useCheckout = () => {
   } = context
 
   /**
+   * Redeem Coupon Mutation
+   */
+  const redeemCouponMutation = useMutation(async (couponrCode) => {
+    const response = await client.commerce.redeemVoucher.mutate({})
+    if (!response.ok) {
+      throw new Error('Failed to redeem.')
+    }
+    return response.json()
+  })
+
+  /**
    * Place Order Mutation
    */
   const placeOrderMutation = useMutation(
@@ -34,8 +45,18 @@ export const useCheckout = () => {
 
       let __checkoutResponse = context.response.checkout
       let redirectUrl
+      const couponCode = context.cartSnapshot.couponApplied
       if (!__checkoutResponse) {
         try {
+          if (couponCode) {
+            try {
+              redemptionResponse = await redeemCouponMutation.mutateAsync(
+                couponCode
+              )
+            } catch (error) {
+              throw new Error('Failed to redeem coupon.')
+            }
+          }
           const params = {
             ...state,
           }

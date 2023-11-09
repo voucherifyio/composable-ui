@@ -1,24 +1,27 @@
 import { OrderWithDiscounts } from '@composable/types/src/voucherify/order-with-discounts'
 import { centToString, toCent } from '../src/to-cent'
 import { Cart, Order } from '@composable/types'
-import { ValidationValidateStackableResponse } from '@voucherify/sdk'
+import {
+  RedemptionsRedeemStackableResponse,
+  ValidationValidateStackableResponse,
+} from '@voucherify/sdk'
 
 export const orderWithDiscount = (
   order: Order | null,
   cart: Cart,
-  validationResponse: ValidationValidateStackableResponse | false
+  redemptionResponse: RedemptionsRedeemStackableResponse | false
 ): OrderWithDiscounts | null => {
   const discountAmount = centToString(
-    validationResponse ? validationResponse.order?.discount_amount : 0
+    redemptionResponse ? redemptionResponse.order?.discount_amount : 0
   )
   const grandPrice = centToString(
-    validationResponse
-      ? validationResponse.order?.total_amount
+    redemptionResponse
+      ? redemptionResponse.order?.total_amount
       : toCent(cart.summary.totalPrice)
   )
   const totalDiscountAmount = centToString(
-    validationResponse
-      ? validationResponse.order?.total_applied_discount_amount
+    redemptionResponse
+      ? redemptionResponse.order?.total_applied_discount_amount
       : 0
   )
   if (!order) {

@@ -9,7 +9,7 @@ import { CartWithDiscounts } from './cart-with-discounts'
 import { OrderWithDiscounts } from './order-with-discounts'
 
 export interface CommerceServiceWithDiscounts extends CommerceService {
-  // Extend exisiting commerce service methods to return cart with applied discount detasils
+  // Extend existing commerce service methods to return cart with applied discount details
 
   addCartItem(
     ...params: Parameters<CommerceService['addCartItem']>
@@ -24,6 +24,9 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
   updateCartItem(
     ...params: Parameters<CommerceService['updateCartItem']>
   ): Promise<CartWithDiscounts>
+  createOrder(params: {
+    checkout: CheckoutInput
+  }): Promise<OrderWithDiscounts | null>
 
   // Additional commerce endpoints to manage applied coupons
 
@@ -35,7 +38,8 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
     coupon: string
     cartId: string
   }): Promise<CartWithDiscounts>
-  createOrder(params: {
-    checkout: CheckoutInput
-  }): Promise<OrderWithDiscounts | null>
+  redeemCoupons(props: {
+    coupons: string[]
+    cartId: string
+  }): Promise<{ result: boolean }>
 }
