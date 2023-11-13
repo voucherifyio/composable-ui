@@ -23,12 +23,8 @@ export const redeemCouponsFunction =
       codes: coupons,
     })
 
-    const redemptionsResults = coupons.map((coupon) =>
-      isRedemptionSucceeded(redemptionResult, coupon)
-    )
-    console.log('redemptionsResults', redemptionsResults)
-    const response = {
-      result: true,
+    const redemptionsResult = isRedemptionSucceeded(redemptionResult, coupons)
+    return {
+      result: redemptionsResult,
     }
-    return response
   }
