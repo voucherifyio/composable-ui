@@ -11,20 +11,28 @@ import {
 import { FormatNumberOptions, useIntl } from 'react-intl'
 import { Section } from '@composable/ui'
 import { CartEmptyState, CartLoadingState } from '../cart'
-import { useCart, useCheckout } from '../../hooks'
+import { CartData, useCart, useCheckout } from '../../hooks'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
+import { cartData } from '../cart/__data__/cart-data'
 
 interface BagSummaryMobileProps {
   accordionProps?: AccordionProps
+  cartData?: CartData
 }
 
-export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
+export const BagSummaryMobile = ({
+  accordionProps,
+  cartData,
+}: BagSummaryMobileProps) => {
   const intl = useIntl()
   const { cart } = useCart()
   const { cartSnapshot } = useCheckout()
+
   const _cart = cart.isEmpty ? cartSnapshot : cart
+
+  const _cartData = cartData ?? cart
 
   const currencyFormatConfig: FormatNumberOptions = {
     currency: APP_CONFIG.CURRENCY_CODE,
@@ -38,25 +46,25 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
           <Text flex="1" textAlign="left" textStyle="Desktop/Body-S">
             {intl.formatMessage(
               {
-                id: _cart?.quantity
+                id: _cartData?.quantity
                   ? 'cart.drawer.titleCount'
                   : 'cart.drawer.title',
               },
-              { count: _cart?.quantity }
+              { count: _cartData?.quantity }
             )}{' '}
             <AccordionIcon />
           </Text>
           <Text textStyle={'Desktop/S'}>
             {intl.formatNumber(
-              parseFloat(_cart?.summary?.totalPrice || '0'),
+              parseFloat(_cartData?.summary?.grandPrice || '0'),
               currencyFormatConfig
             )}
           </Text>
         </AccordionButton>
         <AccordionPanel p={'0'}>
-          {_cart?.isLoading ? (
+          {_cartData?.isLoading ? (
             <CartLoadingState />
-          ) : _cart?.isEmpty ? (
+          ) : _cartData?.isEmpty ? (
             <CartEmptyState />
           ) : (
             <Section
@@ -65,12 +73,12 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
               }}
             >
               <Stack spacing="2" borderBottomWidth={1}>
-                <ProductsList products={_cart?.items} />
+                <ProductsList products={_cartData?.items} />
               </Stack>
 
               <OrderTotals
                 subtotal={intl.formatNumber(
-                  parseFloat(_cart?.summary?.subtotalPrice ?? '0'),
+                  parseFloat(_cartData?.summary?.subtotalPrice ?? '0'),
                   currencyFormatConfig
                 )}
                 deliveryTitle={intl.formatMessage({
@@ -80,14 +88,21 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
                   id: 'cart.summary.shipping.free',
                 })}
                 tax={intl.formatNumber(
-                  parseFloat(_cart?.summary?.taxes ?? '0'),
+                  parseFloat(_cartData?.summary?.taxes ?? '0'),
                   currencyFormatConfig
                 )}
                 totalTitle={intl.formatMessage({
                   id: 'checkout.orderSummary.orderTotal',
                 })}
                 total={intl.formatNumber(
-                  parseFloat(_cart?.summary?.totalPrice ?? '0'),
+                  parseFloat(_cartData?.summary?.grandPrice ?? '0'),
+                  currencyFormatConfig
+                )}
+                totalDiscountAmountTitle={intl.formatMessage({
+                  id: 'cart.summary.totalDiscountAmount',
+                })}
+                totalDiscountAmount={intl.formatNumber(
+                  parseFloat(_cartData?.summary?.discountAmount ?? '0'),
                   currencyFormatConfig
                 )}
               />
