@@ -9,19 +9,19 @@ import {
 export const orderWithDiscount = (
   order: Order | null,
   cart: Cart,
-  redemptionResponse: RedemptionsRedeemStackableResponse | false
+  validationResponse: ValidationValidateStackableResponse | false
 ): OrderWithDiscounts | null => {
   const discountAmount = centToString(
-    redemptionResponse ? redemptionResponse.order?.discount_amount : 0
+    validationResponse ? validationResponse.order?.discount_amount : 0
   )
   const grandPrice = centToString(
-    redemptionResponse
-      ? redemptionResponse.order?.total_amount
+    validationResponse
+      ? validationResponse.order?.total_amount
       : toCent(cart.summary.totalPrice)
   )
   const totalDiscountAmount = centToString(
-    redemptionResponse
-      ? redemptionResponse.order?.total_applied_discount_amount
+    validationResponse
+      ? validationResponse.order?.total_applied_discount_amount
       : 0
   )
   if (!order) {
