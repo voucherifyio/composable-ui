@@ -26,19 +26,21 @@ export const useCheckout = () => {
   /**
    * Redeem Coupon Mutation
    */
-  const redeemCouponsMutation = useMutation(async (coupons: string[]) => {
-    if (!cart.id) {
-      return
+  const redeemCouponsMutation = useMutation(
+    async (coupons: { id: string; type: string }[]) => {
+      if (!cart.id) {
+        return
+      }
+      const redeemedSuccessfully = await client.commerce.redeemCoupons.mutate({
+        cartId: cart.id,
+        coupons,
+      })
+      if (!redeemedSuccessfully) {
+        throw new Error('Failed to redeem.')
+      }
+      return redeemedSuccessfully
     }
-    const redeemedSuccessfully = await client.commerce.redeemCoupons.mutate({
-      cartId: cart.id,
-      coupons,
-    })
-    if (!redeemedSuccessfully) {
-      throw new Error('Failed to redeem.')
-    }
-    return redeemedSuccessfully
-  })
+  )
 
   /**
    * Place Order Mutation
@@ -53,14 +55,11 @@ export const useCheckout = () => {
       let redirectUrl
 
       const coupons = context.cartSnapshot.redeemables
-        ?.filter(
-          (redeemable) =>
-            redeemable.status === 'APPLICABLE' &&
-            redeemable.object === 'voucher'
-        )
+        ?.filter((redeemable) => redeemable.status === 'APPLICABLE')
         .map((redeemable) => {
-          return redeemable.id
+          return { id: redeemable.id, type: redeemable.object }
         })
+
       if (!__checkoutResponse) {
         try {
           if (coupons) {

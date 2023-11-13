@@ -6,13 +6,17 @@ import {
 import { Cart } from '@composable/types'
 import {
   RedemptionsRedeemStackableResponse,
+  StackableRedeemableObject,
   StackableRedeemableResponse,
   VoucherifyServerSide,
 } from '@voucherify/sdk'
 
-type RedeemCouponsParam = {
+export type RedeemCouponsParam = {
   cart: Cart
-  codes: string[]
+  coupons: {
+    id: string
+    type: StackableRedeemableObject
+  }[]
   voucherify: ReturnType<typeof VoucherifyServerSide>
 }
 
@@ -25,12 +29,12 @@ export type RedeemCouponsResponse =
 export const redeemCoupons = async (
   params: RedeemCouponsParam
 ): Promise<RedeemCouponsResponse> => {
-  const { cart, codes, voucherify } = params
+  const { cart, coupons, voucherify } = params
 
   const order = cartToVoucherifyOrder(cart)
 
   return await voucherify.redemptions.redeemStackable({
-    redeemables: [...getRedeemablesForRedemption(codes)],
+    redeemables: [...getRedeemablesForRedemption(coupons)],
     order,
     options: { expand: ['order'] },
   })

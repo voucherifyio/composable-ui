@@ -40,6 +40,9 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
   }): Promise<CartWithDiscounts>
   redeemCoupons(props: {
     cartId: string
-    coupons: string[]
+    coupons: {
+      id: string
+      type: string
+    }[]
   }): Promise<{ result: boolean }>
 }

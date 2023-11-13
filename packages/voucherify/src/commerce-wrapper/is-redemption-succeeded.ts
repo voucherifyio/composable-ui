@@ -1,8 +1,7 @@
 import { RedeemCouponsResponse } from '../redeem-coupons'
 
 export const isRedemptionSucceeded = (
-  redemptionResult: RedeemCouponsResponse,
-  coupons: string[]
+  redemptionResult: RedeemCouponsResponse
 ): boolean => {
   const isRedemptionOfAllCouponsSuccessful =
     redemptionResult &&

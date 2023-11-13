@@ -1,5 +1,8 @@
 import { CommerceService } from '@composable/types'
-import { VoucherifyServerSide } from '@voucherify/sdk'
+import {
+  StackableRedeemableObject,
+  VoucherifyServerSide,
+} from '@voucherify/sdk'
 import { redeemCoupons } from '../redeem-coupons'
 import { isRedemptionSucceeded } from './is-redemption-succeeded'
 
@@ -8,7 +11,16 @@ export const redeemCouponsFunction =
     commerceService: CommerceService,
     voucherify: ReturnType<typeof VoucherifyServerSide>
   ) =>
-  async ({ cartId, coupons }: { cartId: string; coupons: string[] }) => {
+  async ({
+    cartId,
+    coupons,
+  }: {
+    cartId: string
+    coupons: {
+      id: string
+      type: StackableRedeemableObject
+    }[]
+  }) => {
     const cart = await commerceService.getCart({ cartId })
 
     if (!cart) {
@@ -19,11 +31,11 @@ export const redeemCouponsFunction =
 
     const redemptionResult = await redeemCoupons({
       cart,
+      coupons,
       voucherify,
-      codes: coupons,
     })
 
-    const redemptionsResult = isRedemptionSucceeded(redemptionResult, coupons)
+    const redemptionsResult = isRedemptionSucceeded(redemptionResult)
     return {
       result: redemptionsResult,
     }

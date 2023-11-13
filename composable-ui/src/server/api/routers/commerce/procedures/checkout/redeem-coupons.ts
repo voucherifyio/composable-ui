@@ -6,7 +6,12 @@ export const redeemCoupons = protectedProcedure
   .input(
     z.object({
       cartId: z.string(),
-      coupons: z.array(z.string()),
+      coupons: z.array(
+        z.object({
+          id: z.string(),
+          type: z.string(),
+        })
+      ),
     })
   )
   .mutation(async ({ input }) => {
