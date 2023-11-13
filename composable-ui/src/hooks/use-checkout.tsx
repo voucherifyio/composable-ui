@@ -53,7 +53,11 @@ export const useCheckout = () => {
       let redirectUrl
 
       const coupons = context.cartSnapshot.redeemables
-        ?.filter((redeemable) => redeemable.status === 'APPLICABLE')
+        ?.filter(
+          (redeemable) =>
+            redeemable.status === 'APPLICABLE' &&
+            redeemable.object === 'voucher'
+        )
         .map((redeemable) => {
           return redeemable.id
         })
