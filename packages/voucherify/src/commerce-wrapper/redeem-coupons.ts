@@ -27,6 +27,8 @@ export const redeemCouponsFunction =
       isRedemptionSucceeded(redemptionResult, coupon)
     )
     console.log('redemptionsResults', redemptionsResults)
-
-    //return
+    const response = {
+      result: true,
+    }
+    return response
   }
