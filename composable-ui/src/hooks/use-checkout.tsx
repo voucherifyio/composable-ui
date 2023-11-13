@@ -63,12 +63,8 @@ export const useCheckout = () => {
       if (!__checkoutResponse) {
         try {
           if (coupons) {
-            try {
-              await redeemCouponsMutation.mutateAsync(coupons)
-              console.log('Redeemed successfully.')
-            } catch (error) {
-              throw new Error('Failed to redeem coupon.')
-            }
+            await redeemCouponsMutation.mutateAsync(coupons)
+            console.log('Redeemed successfully.')
           }
           const params = {
             ...state,

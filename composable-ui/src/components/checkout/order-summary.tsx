@@ -17,7 +17,6 @@ import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
 import { CartPromotions } from '../cart/cart-promotions'
 import { CouponForm } from '../forms/coupon-form'
-import { CartSummaryProps } from '../cart'
 
 export interface CheckoutSidebarProps {
   itemsBoxProps?: AccordionProps
@@ -118,7 +117,11 @@ export const OrderSummary = ({
             id: 'checkout.orderSummary.orderTotal',
           })}
           total={intl.formatNumber(
-            parseFloat(_cartData?.summary?.grandPrice ?? '0'),
+            parseFloat(
+              _cartData?.summary?.grandPrice ||
+                _cartData?.summary?.totalPrice ||
+                '0'
+            ),
             currencyFormatConfig
           )}
           totalDiscountAmountTitle={intl.formatMessage({
