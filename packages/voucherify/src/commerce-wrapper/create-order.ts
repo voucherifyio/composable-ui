@@ -20,7 +20,7 @@ export const createOrderFunction =
     const codes = await getCartDiscounts(cartId)
 
     if (!cart) {
-      return null
+      throw new Error('[voucherify][createOrderFunction] No cart found.')
     }
 
     const { validationResult, promotionsResult } =

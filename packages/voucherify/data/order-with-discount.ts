@@ -1,10 +1,7 @@
 import { OrderWithDiscounts } from '@composable/types/src/voucherify/order-with-discounts'
 import { centToString, toCent } from '../src/to-cent'
 import { Cart, Order } from '@composable/types'
-import {
-  RedemptionsRedeemStackableResponse,
-  ValidationValidateStackableResponse,
-} from '@voucherify/sdk'
+import { ValidationValidateStackableResponse } from '@voucherify/sdk'
 
 export const orderWithDiscount = (
   order: Order | null,
@@ -25,7 +22,7 @@ export const orderWithDiscount = (
       : 0
   )
   if (!order) {
-    return null
+    throw new Error('[voucherify][orderWithDiscount] Order not found.')
   }
   return {
     ...order,

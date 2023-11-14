@@ -1,10 +1,4 @@
-import {
-  CommerceService,
-  Cart,
-  CartItem,
-  CheckoutInput,
-  Order,
-} from '../commerce'
+import { CommerceService, CheckoutInput } from '../commerce'
 import { CartWithDiscounts } from './cart-with-discounts'
 import { OrderWithDiscounts } from './order-with-discounts'
 
