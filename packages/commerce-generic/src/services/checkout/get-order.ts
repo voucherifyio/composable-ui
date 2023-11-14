@@ -1,6 +1,5 @@
 import { CommerceService } from '@composable/types'
 import { getOrder as getOrerFromStorage } from '../../data/persit'
-import order from '../../data/order.json'
 import shippingMethods from '../../data/shipping-methods.json'
 
 export const getOrder: CommerceService['getOrder'] = async ({ orderId }) => {

@@ -15,7 +15,6 @@ import { CartData, useCart, useCheckout } from '../../hooks'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
-import { cartData } from '../cart/__data__/cart-data'
 
 interface BagSummaryMobileProps {
   accordionProps?: AccordionProps
