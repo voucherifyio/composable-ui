@@ -14,7 +14,8 @@ export const getOrder = async (orderId: string): Promise<Order | undefined> => {
 }
 
 export const saveOrder = async (order: Order) => {
-  return storage.setItem(`order-${order.id}`, order)
+  await storage.setItem(`order-${order.id}`, order)
+  return order
 }
 
 export const getCart = async (cartId: string): Promise<Cart | undefined> => {
