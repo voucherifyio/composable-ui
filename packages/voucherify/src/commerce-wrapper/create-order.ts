@@ -1,10 +1,8 @@
-import { Cart, CheckoutInput, CommerceService, Order } from '@composable/types'
+import { CommerceService } from '@composable/types'
 import { VoucherifyServerSide } from '@voucherify/sdk'
 import { orderWithDiscount } from '../../data/order-with-discount'
 import { validateCouponsAndPromotions } from '../validate-discounts'
 import { getCartDiscounts } from '../../data/persit'
-import { randomUUID } from 'crypto'
-import shippingMethods from '../../../commerce-generic/src/data/shipping-methods.json'
 import { saveOrder } from '../../../commerce-generic/src/data/persit'
 import { generateOrderFromCart } from '../../../commerce-generic/src/services'
 
