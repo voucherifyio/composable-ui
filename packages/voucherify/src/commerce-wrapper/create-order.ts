@@ -35,5 +35,12 @@ export const createOrderFunction =
       cart,
       validationResult
     )
+
+    if (!orderWithDiscounts) {
+      throw new Error(
+        '[voucherify][createOrderFunction] No order with discounts found.'
+      )
+    }
+
     return saveOrder(orderWithDiscounts)
   }

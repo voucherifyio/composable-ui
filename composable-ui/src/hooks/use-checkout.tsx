@@ -31,14 +31,14 @@ export const useCheckout = () => {
       if (!cart.id) {
         return
       }
-      const redeemedSuccessfully = await client.commerce.redeemCoupons.mutate({
+      const redemptionSuccessful = await client.commerce.redeemCoupons.mutate({
         cartId: cart.id,
         coupons,
       })
-      if (!redeemedSuccessfully) {
-        throw new Error('Failed to redeem.')
+      if (!redemptionSuccessful) {
+        throw new Error('Failed to redeem coupons.')
       }
-      return redeemedSuccessfully
+      return redemptionSuccessful
     }
   )
 
@@ -64,7 +64,6 @@ export const useCheckout = () => {
         try {
           if (coupons) {
             await redeemCouponsMutation.mutateAsync(coupons)
-            console.log('Redeemed successfully.')
           }
           const params = {
             ...state,
