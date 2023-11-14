@@ -6,6 +6,7 @@ import { getCartDiscounts } from '../../data/persit'
 import { randomUUID } from 'crypto'
 import shippingMethods from '../../../commerce-generic/src/data/shipping-methods.json'
 import { saveOrder } from '../../../commerce-generic/src/data/persit'
+import { generateOrderFromCart } from '../../../commerce-generic/src/services'
 
 export const createOrderFunction =
   (
@@ -30,35 +31,6 @@ export const createOrderFunction =
         cart,
         codes,
       })
-
-    const generateOrderFromCart = (
-      cart: Cart,
-      checkoutInput: CheckoutInput
-    ): Order => {
-      return {
-        id: randomUUID(),
-        status: 'complete',
-        payment: 'unpaid',
-        shipping: 'unfulfilled',
-        customer: {
-          email: checkoutInput.customer.email,
-        },
-        shipping_address: {
-          phone_number: '',
-          city: '',
-          ...checkoutInput.shipping_address,
-        },
-        billing_address: {
-          phone_number: '',
-          city: '',
-          ...checkoutInput.billing_address,
-        },
-        shipping_method: shippingMethods[0],
-        created_at: Date.now(),
-        items: cart.items,
-        summary: cart.summary,
-      }
-    }
 
     const orderWithDiscounts = orderWithDiscount(
       generateOrderFromCart(cart, props[0].checkout),

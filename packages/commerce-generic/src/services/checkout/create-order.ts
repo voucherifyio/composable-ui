@@ -4,7 +4,7 @@ import { saveOrder } from '../../data/persit'
 import shippingMethods from '../../data/shipping-methods.json'
 import { randomUUID } from 'crypto'
 
-const generateOrderFromCart = (
+export const generateOrderFromCart = (
   cart: Cart,
   checkoutInput: CheckoutInput
 ): Order => {

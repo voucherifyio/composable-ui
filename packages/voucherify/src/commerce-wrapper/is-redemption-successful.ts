@@ -1,6 +1,6 @@
 import { RedeemCouponsResponse } from '../redeem-coupons'
 
-export const isRedemptionSucceeded = (
+export const isRedemptionSuccessful = (
   redemptionResult: RedeemCouponsResponse
 ): boolean => {
   const isRedemptionOfAllCouponsSuccessful =

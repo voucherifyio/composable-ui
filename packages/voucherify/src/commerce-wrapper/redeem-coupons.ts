@@ -4,7 +4,7 @@ import {
   VoucherifyServerSide,
 } from '@voucherify/sdk'
 import { redeemCoupons } from '../redeem-coupons'
-import { isRedemptionSucceeded } from './is-redemption-succeeded'
+import { isRedemptionSuccessful } from './is-redemption-successful'
 
 export const redeemCouponsFunction =
   (
@@ -25,17 +25,17 @@ export const redeemCouponsFunction =
 
     if (!cart) {
       throw new Error(
-        `[voucherify][redeemCoupon] cart not found by id: ${cartId}`
+        `[voucherify][redeemCoupons] cart not found by id: ${cartId}`
       )
     }
 
-    const redemptionResult = await redeemCoupons({
+    const redemptionsResponse = await redeemCoupons({
       cart,
       coupons,
       voucherify,
     })
 
-    const redemptionsResult = isRedemptionSucceeded(redemptionResult)
+    const redemptionsResult = isRedemptionSuccessful(redemptionsResponse)
     return {
       result: redemptionsResult,
     }
