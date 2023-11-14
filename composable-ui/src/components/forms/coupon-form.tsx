@@ -1,27 +1,17 @@
 import * as yup from 'yup'
 import { useIntl } from 'react-intl'
 import { useForm } from 'react-hook-form'
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Flex,
-  TagLeftIcon,
-  Wrap,
-  WrapItem,
-} from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Flex, TagLeftIcon } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
-import { IconButton, Text } from '@chakra-ui/react'
+import { IconButton } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { InputField } from '@composable/ui'
 import { Tag, TagLabel, TagCloseButton } from '@chakra-ui/react'
 import { useCart } from 'hooks'
 import { Price } from 'components/price'
 import { CartSummaryItem } from 'components/cart'
-import { Icon } from '@chakra-ui/react'
 import { MdDiscount } from 'react-icons/md'
-import { displayValue } from '@tanstack/react-query-devtools/build/lib/utils'
 
 export const CouponForm = () => {
   const intl = useIntl()
@@ -151,6 +141,6 @@ export const CouponForm = () => {
 
 const couponFormSchema = () => {
   return yup.object().shape({
-    coupon: yup.string().required(),
+    coupon: yup.string(),
   })
 }
