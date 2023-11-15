@@ -3,6 +3,7 @@ import { cartWithDiscount } from '../../data/cart-with-discount'
 import { VoucherifyServerSide } from '@voucherify/sdk'
 import { getCartDiscounts } from '../../data/persit'
 import { validateCouponsAndPromotions } from '../validate-discounts'
+import { addUnitDiscount } from './add-unit-discount'
 
 export const addCartItemFunction =
   (
@@ -41,25 +42,19 @@ export const addCartItemFunction =
       }
     )
 
-    if (unitDiscountRedeemables.length > 0) {
-      const promises = unitDiscountRedeemables.map(async (redeemable) => {
-        if (redeemable.unitProductId && redeemable.unitProductQuantity) {
-          return await commerceService.addCartItem({
-            cartId: cart.id,
-            productId: redeemable.unitProductId,
-            quantity: redeemable.unitProductQuantity,
-          })
-        }
-      })
-
-      const updatedCarts = await Promise.all(promises)
-      const lastCart = updatedCarts[updatedCarts.length - 1]
-
-      if (!lastCart) {
-        throw new Error('[voucherify][addCartItemFunction] No cart found.')
-      }
-
-      return cartWithDiscount(lastCart, validationResult, promotionsResult)
+    // When a promotion includes free product (unit type discount)
+    if (unitDiscountRedeemables) {
+      const cartWithUnitDiscounts = await addUnitDiscount(
+        unitDiscountRedeemables,
+        commerceService,
+        cart
+      )
+      if (cartWithUnitDiscounts)
+        return cartWithDiscount(
+          cartWithUnitDiscounts,
+          validationResult,
+          promotionsResult
+        )
     }
 
     return cartWithDiscount(voucherifyCart, validationResult, promotionsResult)
