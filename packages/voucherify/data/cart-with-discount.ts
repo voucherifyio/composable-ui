@@ -20,6 +20,7 @@ export const cartWithDiscount = (
         id: redeemable.id,
         status: redeemable.status,
         object: redeemable.object,
+        unitProductId: redeemable.result?.discount?.product?.source_id,
         discount: centToString(
           redeemable.order?.total_applied_discount_amount ||
             redeemable.result?.discount?.amount_off ||

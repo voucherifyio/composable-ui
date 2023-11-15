@@ -31,6 +31,7 @@ export type CartWithDiscounts = Cart & {
 }
 
 export type Redeemable = {
+  unitProductId?: string
   id: string
   status: string
   object: 'voucher' | 'promotion_tier' | 'promotion_stack'
