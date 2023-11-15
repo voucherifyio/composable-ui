@@ -1,9 +1,10 @@
-import { CommerceService } from '@composable/types'
+import { commerce } from '../../../../composable-ui/src/server/data-source'
 import { cartWithDiscount } from '../../data/cart-with-discount'
 import { VoucherifyServerSide } from '@voucherify/sdk'
 import { getCartDiscounts, saveCartDiscounts } from '../../data/persit'
 import { validateCouponsAndPromotions } from '../validate-discounts'
 import { isRedeemableApplicable } from './is-redeemable-applicable'
+import { CommerceService } from '@composable/types'
 
 export const addCouponFunction =
   (
@@ -11,7 +12,9 @@ export const addCouponFunction =
     voucherify: ReturnType<typeof VoucherifyServerSide>
   ) =>
   async ({ cartId, coupon }: { cartId: string; coupon: string }) => {
-    const cart = await commerceService.getCart({ cartId })
+    const cart =
+      (await commerce.getCart({ cartId })) ||
+      (await commerceService.getCart({ cartId }))
 
     if (!cart) {
       throw new Error(`[voucherify][addCoupon] cart not found by id: ${cartId}`)
@@ -33,10 +36,14 @@ export const addCouponFunction =
 
     if (isApplicable) {
       await saveCartDiscounts(cartId, [...cartDiscounts, coupon])
+      return {
+        cart: cartWithDiscount(cart, validationResult, promotionsResult),
+        result: isApplicable,
+        errorMsg: error,
+      }
     }
-
     return {
-      cart: cartWithDiscount(cart, validationResult, promotionsResult),
+      cart: cart,
       result: isApplicable,
       errorMsg: error,
     }

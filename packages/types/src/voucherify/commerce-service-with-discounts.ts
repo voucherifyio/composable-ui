@@ -1,4 +1,4 @@
-import { CommerceService, CheckoutInput } from '../commerce'
+import { CommerceService, CheckoutInput, Cart } from '../commerce'
 import { CartWithDiscounts } from './cart-with-discounts'
 import { OrderWithDiscounts } from './order-with-discounts'
 
@@ -24,10 +24,11 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
 
   // Additional commerce endpoints to manage applied coupons
 
-  addCoupon(props: {
-    coupon: string
-    cartId: string
-  }): Promise<{ cart: CartWithDiscounts; result: boolean; errorMsg?: string }>
+  addCoupon(props: { coupon: string; cartId: string }): Promise<{
+    cart: CartWithDiscounts | Cart
+    result: boolean
+    errorMsg?: string
+  }>
   deleteCoupon(props: {
     coupon: string
     cartId: string
