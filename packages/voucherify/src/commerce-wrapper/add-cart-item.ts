@@ -43,21 +43,22 @@ export const addCartItemFunction =
 
     if (unitDiscountRedeemables.length > 0) {
       const promises = unitDiscountRedeemables.map(async (redeemable) => {
-        if (redeemable.unitProductId) {
+        if (redeemable.unitProductId && redeemable.unitProductQuantity) {
           return await commerceService.addCartItem({
             cartId: cart.id,
             productId: redeemable.unitProductId,
-            quantity: 1,
+            quantity: redeemable.unitProductQuantity,
           })
         }
       })
 
       const updatedCarts = await Promise.all(promises)
-
       const lastCart = updatedCarts[updatedCarts.length - 1]
+
       if (!lastCart) {
         throw new Error('[voucherify][addCartItemFunction] No cart found.')
       }
+
       return cartWithDiscount(lastCart, validationResult, promotionsResult)
     }
 
