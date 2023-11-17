@@ -1,26 +1,9 @@
 import { useIntl } from 'react-intl'
-import { CartItem, Redeemable } from '@composable/types'
-import {
-  Box,
-  Divider,
-  Flex,
-  HStack,
-  Link,
-  StackDivider,
-  Tag,
-  TagCloseButton,
-  TagLabel,
-  Wrap,
-  WrapItem,
-  Text,
-  useBreakpointValue,
-  TagLeftIcon,
-} from '@chakra-ui/react'
-import { Icon } from '@chakra-ui/icons'
+import { Redeemable } from '@composable/types'
+import { Box, Flex, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react'
 import { MdShoppingCart } from 'react-icons/md'
 import { Price } from 'components/price'
-import { QuantityPicker } from 'components/quantity-picker'
-import { CartItemData, CartSummaryItem } from '.'
+import { CartSummaryItem } from '.'
 
 interface CartPromotionsProps {
   promotions: Redeemable[]
