@@ -50,40 +50,36 @@ export const CartDrawerSummary = ({ cartData }: CartSummaryProps) => {
       <Divider m={'10px 0'} />
 
       {_cartData.summary?.totalPrice && (
-        <>
-          <Flex
-            justify="space-between"
-            textStyle={{ base: 'Mobile/S', md: 'Desktop/S' }}
-          >
-            <Text>
-              {intl.formatMessage({ id: 'cart.summary.estimatedTotal' })}
-            </Text>
-            <Box>
-              <Price
-                rootProps={{ textStyle: 'Desktop/S' }}
-                price={_cartData.summary.totalPrice}
-              />
-            </Box>
-          </Flex>
-        </>
+        <CartDrawerSummaryItem
+          label={intl.formatMessage({ id: 'cart.summary.orderTotal' })}
+        >
+          <Box>
+            <Price
+              rootProps={{ textStyle: 'Desktop/XS' }}
+              price={_cartData.summary.totalPrice}
+            />
+          </Box>
+        </CartDrawerSummaryItem>
       )}
 
       {_cartData.summary?.totalDiscountAmount && (
-        <CartSummaryItem
-          label={intl.formatMessage({
-            id: 'cart.summary.totalDiscountAmount',
-          })}
+        <CartDrawerSummaryItem
+          label={intl.formatMessage({ id: 'cart.summary.totalDiscountAmount' })}
         >
-          <Price
-            rootProps={{ textStyle: 'Body-S', color: 'green' }}
-            price={`-${_cartData.summary.totalDiscountAmount}`}
-          />
-        </CartSummaryItem>
+          <Box>
+            <Price
+              rootProps={{
+                textStyle: 'Body-XS',
+                color: 'green',
+              }}
+              price={`-${_cartData.summary.totalDiscountAmount}`}
+            />
+          </Box>
+        </CartDrawerSummaryItem>
       )}
-
+      <Divider m={'10px 0'} />
       {_cartData.summary?.grandPrice && (
         <>
-          <Divider />
           <Flex
             justify="space-between"
             textStyle={{ base: 'Mobile/S', md: 'Desktop/S' }}

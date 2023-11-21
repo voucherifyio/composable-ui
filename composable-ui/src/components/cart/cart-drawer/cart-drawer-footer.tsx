@@ -29,7 +29,7 @@ export const CartDrawerFooter = ({ cartData }: CartSummaryProps) => {
               color={'text-muted'}
               textStyle={{ base: 'Mobile/Eyebrow', md: 'Desktop/Body-XS' }}
             >
-              {intl.formatMessage({ id: 'cart.summary.estimatedTotal' })}
+              {intl.formatMessage({ id: 'cart.summary.grandPrice' })}
             </Text>
           </Box>
           <Box>
