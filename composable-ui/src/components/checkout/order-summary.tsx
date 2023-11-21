@@ -98,8 +98,13 @@ export const OrderSummary = ({
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-        <CartPromotions promotions={promotions} />
-        <CouponForm />
+        <Stack bg="shading.100" p={'1rem 1.5rem'}>
+          <CartPromotions promotions={promotions} />
+        </Stack>
+        <Stack bg="shading.100" p={'1rem 1.5rem'}>
+          <CouponForm />
+        </Stack>
+        <Divider />
         <OrderTotals
           subtotal={intl.formatNumber(
             parseFloat(_cartData?.summary?.subtotalPrice ?? '0'),

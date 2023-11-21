@@ -1,5 +1,6 @@
 import { Divider, Flex, Stack, Text, TextProps } from '@chakra-ui/react'
 import { useIntl } from 'react-intl'
+import { Price } from '../price'
 
 interface OrderTotalsProps {
   subtotal: string
@@ -52,9 +53,10 @@ export const OrderTotals = ({
         />
         {totalDiscountAmount && (
           <CartSummaryItem
-            isDiscount
             label={totalDiscountAmountTitle ?? ''}
             value={totalDiscountAmount}
+            textProps={{ color: 'green' }}
+            isDiscount
           />
         )}
       </Stack>
@@ -82,7 +84,10 @@ const CartSummaryItem = (props: CartSummaryItemProps) => {
   return (
     <Flex justify="space-between" fontSize="sm">
       <Text {...textProps}>{label}</Text>
-      <Text {...textProps} color={isDiscount ? 'red' : undefined}>
+      <Text
+        {...textProps}
+        color={isDiscount ? textProps?.color ?? 'red' : undefined}
+      >
         {isDiscount && '-'}
         {value}
       </Text>
