@@ -98,9 +98,11 @@ export const OrderSummary = ({
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-        <Stack bg="shading.100" p={'1rem 1.5rem'}>
-          <CartPromotions promotions={promotions} />
-        </Stack>
+        {promotions.length > 0 && (
+          <Stack bg="shading.100" p={'1rem 1.5rem'}>
+            <CartPromotions promotions={promotions} />
+          </Stack>
+        )}
         <Stack bg="shading.100" p={'1rem 1.5rem'}>
           <CouponForm />
         </Stack>
