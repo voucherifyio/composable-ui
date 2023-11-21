@@ -101,8 +101,11 @@ export const CartSummary = ({
               </Flex>
             </>
           )}
+          <Divider />
           <CartPromotions promotions={promotions} />
+          <Divider />
           <CouponForm />
+          <Divider />
           {_cartData.summary?.totalDiscountAmount && (
             <CartSummaryItem
               label={intl.formatMessage({
