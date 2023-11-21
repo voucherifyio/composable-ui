@@ -21,6 +21,9 @@ export interface CommerceServiceWithDiscounts extends CommerceService {
   createOrder(params: {
     checkout: CheckoutInput
   }): Promise<OrderWithDiscounts | null>
+  getOrder(
+    ...params: Parameters<CommerceService['getOrder']>
+  ): Promise<OrderWithDiscounts | null>
 
   // Additional commerce endpoints to manage applied coupons
 

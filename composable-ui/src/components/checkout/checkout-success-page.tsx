@@ -150,7 +150,16 @@ export const CheckoutSuccessPage = ({
               style: 'currency',
             })}
             total={intl.formatNumber(
-              parseFloat(order?.summary.totalPrice ?? '0'),
+              parseFloat(
+                order?.summary.grandPrice ?? order?.summary.totalPrice ?? '0'
+              ),
+              {
+                currency: APP_CONFIG.CURRENCY_CODE,
+                style: 'currency',
+              }
+            )}
+            totalDiscountAmount={intl.formatNumber(
+              parseFloat(order?.summary.totalDiscountAmount || '0'),
               {
                 currency: APP_CONFIG.CURRENCY_CODE,
                 style: 'currency',

@@ -12,6 +12,7 @@ import { addCouponFunction } from './add-coupon'
 import { deleteCouponFunction } from './delete-coupon'
 import { createOrderFunction } from './create-order'
 import { redeemCouponsFunction } from './redeem-coupons'
+import { getOrderFunction } from './get-order'
 
 if (
   !process.env.VOUCHERIFY_APPLICATION_ID ||
@@ -44,5 +45,6 @@ export const commerceWithDiscount = (
     deleteCoupon: deleteCouponFunction(commerceService, voucherify),
     redeemCoupons: redeemCouponsFunction(commerceService, voucherify),
     createOrder: createOrderFunction(commerceService, voucherify),
+    getOrder: getOrderFunction(commerceService, voucherify),
   }
 }
