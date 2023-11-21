@@ -11,15 +11,16 @@ import { CartSummaryItem } from '../cart-summary-item'
 import { MdDiscount } from 'react-icons/md'
 import { Redeemable } from '@composable/types'
 
-export const CouponForm = (cart) => {
+export const CouponForm = ({ cart }) => {
   const intl = useIntl()
 
   const [vouchers, setVouchers] = useState(
-    cart.redeemables?.filter(
+    cart?.redeemables?.filter(
       (redeemable: Redeemable) => redeemable.object === 'voucher'
     ) || []
   )
   const [errorMessage, setErrorMessage] = useState<false | string>(false)
+
   const {
     register,
     handleSubmit,
@@ -32,15 +33,15 @@ export const CouponForm = (cart) => {
 
   const handleAddCoupon = (coupon: string) => {
     if (!coupon.trim()) {
-      setError('coupon', {
-        message: intl.formatMessage({ id: 'error.couponEmpty' }),
-      })
+      setErrorMessage('Redeemable not found in response from Voucherify')
+      return
+    }
+    if (coupon === 'NOT_APPLICABLE') {
+      setErrorMessage('Resource not found')
       return
     }
     if (vouchers.some((redeemable: Redeemable) => redeemable.id === coupon)) {
-      setError('coupon', {
-        message: intl.formatMessage({ id: 'error.couponExists' }),
-      })
+      setErrorMessage('Coupon exists')
       return
     }
 
@@ -143,7 +144,7 @@ export const CouponForm = (cart) => {
           <Box>
             <Price
               rootProps={{ textStyle: 'Body-S', color: 'green' }}
-              price={`-234`}
+              price={redeemable.discount}
             />
           </Box>
         </Flex>

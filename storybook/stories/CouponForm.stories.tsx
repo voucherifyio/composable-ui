@@ -13,7 +13,23 @@ const Template: ComponentStory<typeof CouponForm> = (args) => (
 )
 
 export const DefaultCouponForm = Template.bind({})
-DefaultCouponForm.args = {}
+DefaultCouponForm.args = {
+  cart: {
+    id: 'cart_id',
+    cartType: 'CartWithDiscounts',
+    redeemables: [],
+    items: [],
+    summary: {
+      subtotalPrice: '200',
+      taxes: '10',
+      totalPrice: '210',
+      shipping: '0',
+      discountAmount: '15',
+      totalDiscountAmount: '',
+      grandPrice: '',
+    },
+  },
+}
 
 export const CouponFormWithVouchers = Template.bind({})
 CouponFormWithVouchers.args = {
