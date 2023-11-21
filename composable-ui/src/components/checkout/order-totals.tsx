@@ -12,6 +12,8 @@ interface OrderTotalsProps {
   total: string
   totalDiscountAmountTitle?: string
   totalDiscountAmount?: string
+  grandPriceTitle?: string
+  grandPrice?: string
 }
 
 export const OrderTotals = ({
@@ -23,6 +25,8 @@ export const OrderTotals = ({
   total,
   totalDiscountAmountTitle,
   totalDiscountAmount,
+  grandPriceTitle,
+  grandPrice,
 }: OrderTotalsProps) => {
   const intl = useIntl()
 
@@ -51,6 +55,8 @@ export const OrderTotals = ({
           label={intl.formatMessage({ id: 'cart.summary.tax' })}
           value={tax}
         />
+        <Divider />
+        <CartSummaryItem label={totalTitle ?? ''} value={total} />
         {totalDiscountAmount && (
           <CartSummaryItem
             label={totalDiscountAmountTitle ?? ''}
@@ -59,15 +65,18 @@ export const OrderTotals = ({
             isDiscount
           />
         )}
+        <Divider />
+        {grandPrice && (
+          <CartSummaryItem
+            label={grandPriceTitle ?? ''}
+            value={grandPrice}
+            textProps={{
+              fontSize: 'base',
+              fontWeight: 'extrabold',
+            }}
+          />
+        )}
       </Stack>
-      <CartSummaryItem
-        label={totalTitle ?? ''}
-        value={total}
-        textProps={{
-          fontSize: 'base',
-          fontWeight: 'extrabold',
-        }}
-      />
     </Stack>
   )
 }

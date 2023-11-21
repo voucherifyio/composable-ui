@@ -124,11 +124,7 @@ export const OrderSummary = ({
             id: 'checkout.orderSummary.orderTotal',
           })}
           total={intl.formatNumber(
-            parseFloat(
-              _cartData?.summary?.grandPrice ||
-                _cartData?.summary?.totalPrice ||
-                '0'
-            ),
+            parseFloat(_cartData?.summary?.totalPrice || '0'),
             currencyFormatConfig
           )}
           totalDiscountAmountTitle={intl.formatMessage({
@@ -136,6 +132,13 @@ export const OrderSummary = ({
           })}
           totalDiscountAmount={intl.formatNumber(
             parseFloat(_cartData?.summary?.totalDiscountAmount || '0'),
+            currencyFormatConfig
+          )}
+          grandPriceTitle={intl.formatMessage({
+            id: 'cart.summary.grandPrice',
+          })}
+          grandPrice={intl.formatNumber(
+            parseFloat(_cartData?.summary?.grandPrice || '0'),
             currencyFormatConfig
           )}
         />

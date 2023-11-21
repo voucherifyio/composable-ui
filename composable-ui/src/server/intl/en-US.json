@@ -191,6 +191,8 @@
   "checkout.success.orderDetails.shippingAddress": "Shipping Address",
   "checkout.success.orderSummary.title": "Order Summary",
   "checkout.success.orderSummary.totalPaid": "Total Paid",
+  "checkout.success.orderSummary.orderTotal": "Order Total",
+  "checkout.success.orderSummary.totalDiscountAmount": "All discounts",
 
   "product.returnPolicy.title": "Return Policy",
   "product.returnsAndShippingPolicy.title": "Return & Shipping",

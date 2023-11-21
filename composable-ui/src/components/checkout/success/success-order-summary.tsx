@@ -14,6 +14,7 @@ interface OrderSummaryProps {
   discount?: string
   total: string
   totalDiscountAmount?: string
+  grandPrice?: string
 }
 
 export const SuccessOrderSummary = ({
@@ -26,6 +27,7 @@ export const SuccessOrderSummary = ({
   discount,
   total,
   totalDiscountAmount,
+  grandPrice,
 }: OrderSummaryProps) => {
   const intl = useIntl()
 
@@ -59,13 +61,17 @@ export const SuccessOrderSummary = ({
         tax={tax}
         discount={discount}
         totalTitle={intl.formatMessage({
-          id: 'checkout.success.orderSummary.totalPaid',
+          id: 'cart.summary.orderTotal',
         })}
         total={total}
         totalDiscountAmountTitle={intl.formatMessage({
           id: 'cart.summary.totalDiscountAmount',
         })}
         totalDiscountAmount={totalDiscountAmount}
+        grandPriceTitle={intl.formatMessage({
+          id: 'checkout.success.orderSummary.totalPaid',
+        })}
+        grandPrice={grandPrice}
       />
     </SuccessSection>
   )
