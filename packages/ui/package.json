@@ -22,7 +22,9 @@
     "@chakra-ui/styled-system": "^2.5.1",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "@composable/types": "workspace:*",
+    "react-intl": "^5.21.1"
   },
   "peerDependencies": {
     "@chakra-ui/icons": "^2.0.4",
