@@ -156,11 +156,11 @@ export const CartDrawer = () => {
                 })}
               </Stack>
               {promotions.length > 0 && (
-                <Stack bg="shading.100" p={'1rem 1.5rem'}>
+                <Stack bg="shading.100" p={'0.7rem 1.5rem'} mb={'-5'}>
                   <CartPromotions promotions={promotions} />
                 </Stack>
               )}
-              <Stack bg="shading.100" p={'1rem 1.5rem'}>
+              <Stack bg="shading.100" p={'0.7rem 1.5rem'} mb={'-5'}>
                 <CouponForm />
               </Stack>
               <CartDrawerSummary />

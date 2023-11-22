@@ -11,7 +11,6 @@ interface CartPromotionsProps {
 
 export const CartPromotions = ({ promotions }: CartPromotionsProps) => {
   const intl = useIntl()
-  // const isMobile = useBreakpointValue({ base: true, md: false })
   if (!promotions.length) {
     return null
   }
