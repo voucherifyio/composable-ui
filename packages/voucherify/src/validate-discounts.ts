@@ -17,7 +17,7 @@ type ValidateDiscountsParam = {
   voucherify: ReturnType<typeof VoucherifyServerSide>
 }
 
-export type validateCouponsAndPromotionsResponse = {
+export type ValidateCouponsAndPromotionsResponse = {
   promotionsResult: PromotionsValidateResponse
   validationResult: ValidateStackableResult
 }
@@ -30,7 +30,7 @@ export type ValidateStackableResult =
 
 export const validateCouponsAndPromotions = async (
   params: ValidateDiscountsParam
-): Promise<validateCouponsAndPromotionsResponse> => {
+): Promise<ValidateCouponsAndPromotionsResponse> => {
   const { cart, codes, voucherify } = params
 
   const order = cartToVoucherifyOrder(cart)
