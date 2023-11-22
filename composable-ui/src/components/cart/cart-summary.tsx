@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
-import { useCart } from 'hooks'
+import { CartData, useCart } from 'hooks'
 import { Price } from 'components/price'
 import { CouponForm } from 'components/forms/coupon-form'
 import {
@@ -15,24 +15,24 @@ import {
 import { CartSummaryItem } from '.'
 import { CartPromotions } from './cart-promotions'
 
-export interface CartSummaryProps {
+interface CartSummaryProps {
   rootProps?: StackProps
   renderCheckoutButton?: boolean
+  cartData?: CartData
 }
 
 export const CartSummary = ({
   rootProps,
   renderCheckoutButton = true,
+  cartData,
 }: CartSummaryProps) => {
   const router = useRouter()
   const { cart } = useCart()
   const intl = useIntl()
+  const _cartData = cartData ?? cart
 
-  const vouchers =
-    cart.redeemables?.filter((redeemable) => redeemable.object === 'voucher') ||
-    []
   const promotions =
-    cart.redeemables?.filter(
+    _cartData.redeemables?.filter(
       (redeemable) => redeemable.object === 'promotion_tier'
     ) || []
 
@@ -49,39 +49,39 @@ export const CartSummary = ({
         </Text>
 
         <Stack spacing="4">
-          {cart.summary?.subtotalPrice && (
+          {_cartData.summary?.subtotalPrice && (
             <CartSummaryItem
               label={intl.formatMessage({ id: 'cart.summary.subtotal' })}
             >
               <Price
                 rootProps={{ textStyle: 'Body-S' }}
-                price={cart.summary.subtotalPrice}
+                price={_cartData.summary.subtotalPrice}
               />
             </CartSummaryItem>
           )}
-          {cart.summary?.shipping && (
+          {_cartData.summary?.shipping && (
             <CartSummaryItem
               label={intl.formatMessage({ id: 'cart.summary.shipping' })}
             >
               <Price
                 rootProps={{ textStyle: 'Body-S' }}
-                price={cart.summary.shipping}
+                price={_cartData.summary.shipping}
               />
             </CartSummaryItem>
           )}
 
-          {cart.summary?.taxes && (
+          {_cartData.summary?.taxes && (
             <CartSummaryItem
               label={intl.formatMessage({ id: 'cart.summary.taxes' })}
             >
               <Price
                 rootProps={{ textStyle: 'Body-S' }}
-                price={cart.summary.taxes}
+                price={_cartData.summary.taxes}
               />
             </CartSummaryItem>
           )}
 
-          {cart.summary?.totalPrice && (
+          {_cartData.summary?.totalPrice && (
             <>
               <Divider />
               <Flex
@@ -92,17 +92,14 @@ export const CartSummary = ({
                   {intl.formatMessage({ id: 'cart.summary.orderTotal' })}
                 </Text>
                 <Box>
-                  <Price price={cart.summary.totalPrice} />
+                  <Price price={_cartData.summary.totalPrice} />
                 </Box>
               </Flex>
             </>
           )}
-          <Divider />
           <CartPromotions promotions={promotions} />
-          <Divider />
           <CouponForm />
-          <Divider />
-          {cart.summary?.totalDiscountAmount && (
+          {_cartData.summary?.totalDiscountAmount && (
             <CartSummaryItem
               label={intl.formatMessage({
                 id: 'cart.summary.totalDiscountAmount',
@@ -110,12 +107,12 @@ export const CartSummary = ({
             >
               <Price
                 rootProps={{ textStyle: 'Body-S', color: 'green' }}
-                price={`-${cart.summary.totalDiscountAmount}`}
+                price={`-${_cartData.summary.totalDiscountAmount}`}
               />
             </CartSummaryItem>
           )}
 
-          {cart.summary?.grandPrice && (
+          {_cartData.summary?.grandPrice && (
             <>
               <Divider />
               <Flex
@@ -126,7 +123,7 @@ export const CartSummary = ({
                   {intl.formatMessage({ id: 'cart.summary.grandPrice' })}
                 </Text>
                 <Box>
-                  <Price price={cart.summary.grandPrice} />
+                  <Price price={_cartData.summary.grandPrice} />
                 </Box>
               </Flex>
             </>
