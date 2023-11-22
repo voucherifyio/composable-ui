@@ -1,5 +1,4 @@
 import { useIntl } from 'react-intl'
-import { useRouter } from 'next/router'
 import { useCart } from 'hooks'
 import { Price } from 'components/price'
 import { Flex, Text, FlexProps } from '@chakra-ui/react'
@@ -9,7 +8,6 @@ interface CartTotalProps {
 }
 
 export const CartTotal = ({ rootProps }: CartTotalProps) => {
-  const router = useRouter()
   const { cart } = useCart()
   const intl = useIntl()
 
