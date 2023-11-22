@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { CartData, useCart, useCheckout } from 'hooks'
+import { useCart, useCheckout } from 'hooks'
 import { FormatNumberOptions, useIntl } from 'react-intl'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
@@ -21,13 +21,11 @@ import { CouponForm } from '../forms/coupon-form'
 export interface CheckoutSidebarProps {
   itemsBoxProps?: AccordionProps
   showTitle?: boolean
-  cartData?: CartData
 }
 
 export const OrderSummary = ({
   itemsBoxProps,
   showTitle = true,
-  cartData,
 }: CheckoutSidebarProps) => {
   const intl = useIntl()
   const { cart } = useCart()
@@ -39,10 +37,8 @@ export const OrderSummary = ({
     style: 'currency',
   }
 
-  const _cartData = cartData ?? cart
-
   const promotions =
-    _cartData.redeemables?.filter(
+    cart.redeemables?.filter(
       (redeemable) => redeemable.object === 'promotion_tier'
     ) || []
 
@@ -106,10 +102,10 @@ export const OrderSummary = ({
         <Stack bg="shading.100" p={'1rem 1.5rem'}>
           <CouponForm />
         </Stack>
-        <Divider />
+        <Divider mb="-5" />
         <OrderTotals
           subtotal={intl.formatNumber(
-            parseFloat(_cartData?.summary?.subtotalPrice ?? '0'),
+            parseFloat(cart?.summary?.subtotalPrice ?? '0'),
             currencyFormatConfig
           )}
           deliveryTitle={intl.formatMessage({
@@ -117,28 +113,28 @@ export const OrderSummary = ({
           })}
           delivery={intl.formatMessage({ id: 'cart.summary.shipping.free' })}
           tax={intl.formatNumber(
-            parseFloat(_cartData?.summary?.taxes ?? '0'),
+            parseFloat(cart?.summary?.taxes ?? '0'),
             currencyFormatConfig
           )}
           totalTitle={intl.formatMessage({
             id: 'checkout.orderSummary.orderTotal',
           })}
           total={intl.formatNumber(
-            parseFloat(_cartData?.summary?.totalPrice || '0'),
+            parseFloat(cart?.summary?.totalPrice || '0'),
             currencyFormatConfig
           )}
           totalDiscountAmountTitle={intl.formatMessage({
             id: 'cart.summary.totalDiscountAmount',
           })}
           totalDiscountAmount={intl.formatNumber(
-            parseFloat(_cartData?.summary?.totalDiscountAmount || '0'),
+            parseFloat(cart?.summary?.totalDiscountAmount || '0'),
             currencyFormatConfig
           )}
           grandPriceTitle={intl.formatMessage({
             id: 'cart.summary.grandPrice',
           })}
           grandPrice={intl.formatNumber(
-            parseFloat(_cartData?.summary?.grandPrice || '0'),
+            parseFloat(cart?.summary?.grandPrice || '0'),
             currencyFormatConfig
           )}
         />

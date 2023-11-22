@@ -17,7 +17,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { APP_CONFIG } from '../../../utils/constants'
-import { CartLoadingState, CartSummaryProps } from '../.'
+import { CartLoadingState } from '../.'
 import { CartDrawerFooter } from './cart-drawer-footer'
 import { CartDrawerSummary } from './cart-drawer-summary'
 import { CartDrawerEmptyState } from './cart-drawer-empty-state'
@@ -25,7 +25,7 @@ import { HorizontalProductCard } from '@composable/ui'
 import { CouponForm } from '../../forms/coupon-form'
 import { CartPromotions } from '../cart-promotions'
 
-export const CartDrawer = ({ cartData }: CartSummaryProps) => {
+export const CartDrawer = () => {
   const intl = useIntl()
   const toast = useToast()
   const router = useRouter()
@@ -40,8 +40,6 @@ export const CartDrawer = ({ cartData }: CartSummaryProps) => {
     },
   })
 
-  const _cartData = cartData ?? cart
-
   const title = intl.formatMessage(
     { id: 'cart.drawer.titleCount' },
     { count: cart.quantity }
@@ -52,7 +50,7 @@ export const CartDrawer = ({ cartData }: CartSummaryProps) => {
   }
 
   const promotions =
-    _cartData.redeemables?.filter(
+    cart.redeemables?.filter(
       (redeemable) => redeemable.object === 'promotion_tier'
     ) || []
 

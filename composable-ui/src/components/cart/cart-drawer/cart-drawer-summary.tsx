@@ -3,66 +3,63 @@ import { useIntl } from 'react-intl'
 import { useCart } from 'hooks'
 import { CartDrawerSummaryItem } from './cart-drawer-summary-item'
 import { Price } from '../../price'
-import { CartSummaryItem } from '../cart-summary-item'
-import { CartSummaryProps } from '../cart-summary'
 
-export const CartDrawerSummary = ({ cartData }: CartSummaryProps) => {
+export const CartDrawerSummary = () => {
   const { cart } = useCart()
   const intl = useIntl()
-  const _cartData = cartData ?? cart
 
   return (
     <Box>
       <Divider m={'10px 0'} />
 
-      {_cartData.summary?.subtotalPrice && (
+      {cart.summary?.subtotalPrice && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.subtotal' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={_cartData.summary.subtotalPrice}
+            price={cart.summary.subtotalPrice}
           />
         </CartDrawerSummaryItem>
       )}
 
-      {_cartData.summary?.taxes && (
+      {cart.summary?.taxes && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.taxes' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={_cartData.summary.taxes}
+            price={cart.summary.taxes}
           />
         </CartDrawerSummaryItem>
       )}
 
-      {_cartData.summary?.shipping && (
+      {cart.summary?.shipping && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.shipping' })}
         >
           <Price
             rootProps={{ textStyle: 'Mobile/Body-S' }}
-            price={_cartData.summary.shipping}
+            price={cart.summary.shipping}
           />
         </CartDrawerSummaryItem>
       )}
       <Divider m={'10px 0'} />
 
-      {_cartData.summary?.totalPrice && (
+      {cart.summary?.totalPrice && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.orderTotal' })}
         >
           <Box>
             <Price
               rootProps={{ textStyle: 'Desktop/XS' }}
-              price={_cartData.summary.totalPrice}
+              price={cart.summary.totalPrice}
             />
           </Box>
         </CartDrawerSummaryItem>
       )}
 
-      {_cartData.summary?.totalDiscountAmount && (
+      {cart.summary?.totalDiscountAmount && (
         <CartDrawerSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.totalDiscountAmount' })}
         >
@@ -72,13 +69,13 @@ export const CartDrawerSummary = ({ cartData }: CartSummaryProps) => {
                 textStyle: 'Body-XS',
                 color: 'green',
               }}
-              price={`-${_cartData.summary.totalDiscountAmount}`}
+              price={`-${cart.summary.totalDiscountAmount}`}
             />
           </Box>
         </CartDrawerSummaryItem>
       )}
       <Divider m={'10px 0'} />
-      {_cartData.summary?.grandPrice && (
+      {cart.summary?.grandPrice && (
         <>
           <Flex
             justify="space-between"
@@ -86,7 +83,7 @@ export const CartDrawerSummary = ({ cartData }: CartSummaryProps) => {
           >
             <Text>{intl.formatMessage({ id: 'cart.summary.grandPrice' })}</Text>
             <Box>
-              <Price price={_cartData.summary.grandPrice} />
+              <Price price={cart.summary.grandPrice} />
             </Box>
           </Flex>
         </>

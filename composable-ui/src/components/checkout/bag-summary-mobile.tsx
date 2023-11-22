@@ -11,27 +11,18 @@ import {
 import { FormatNumberOptions, useIntl } from 'react-intl'
 import { Section } from '@composable/ui'
 import { CartEmptyState, CartLoadingState } from '../cart'
-import { CartData, useCart, useCheckout } from '../../hooks'
+import { useCart } from '../../hooks'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
 
 interface BagSummaryMobileProps {
   accordionProps?: AccordionProps
-  cartData?: CartData
 }
 
-export const BagSummaryMobile = ({
-  accordionProps,
-  cartData,
-}: BagSummaryMobileProps) => {
+export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
   const intl = useIntl()
   const { cart } = useCart()
-  const { cartSnapshot } = useCheckout()
-
-  const _cart = cart.isEmpty ? cartSnapshot : cart
-
-  const _cartData = cartData ?? cart
 
   const currencyFormatConfig: FormatNumberOptions = {
     currency: APP_CONFIG.CURRENCY_CODE,
@@ -45,25 +36,25 @@ export const BagSummaryMobile = ({
           <Text flex="1" textAlign="left" textStyle="Desktop/Body-S">
             {intl.formatMessage(
               {
-                id: _cartData?.quantity
+                id: cart?.quantity
                   ? 'cart.drawer.titleCount'
                   : 'cart.drawer.title',
               },
-              { count: _cartData?.quantity }
+              { count: cart?.quantity }
             )}{' '}
             <AccordionIcon />
           </Text>
           <Text textStyle={'Desktop/S'}>
             {intl.formatNumber(
-              parseFloat(_cartData?.summary?.grandPrice || '0'),
+              parseFloat(cart?.summary?.grandPrice || '0'),
               currencyFormatConfig
             )}
           </Text>
         </AccordionButton>
         <AccordionPanel p={'0'}>
-          {_cartData?.isLoading ? (
+          {cart?.isLoading ? (
             <CartLoadingState />
-          ) : _cartData?.isEmpty ? (
+          ) : cart?.isEmpty ? (
             <CartEmptyState />
           ) : (
             <Section
@@ -72,12 +63,12 @@ export const BagSummaryMobile = ({
               }}
             >
               <Stack spacing="2" borderBottomWidth={1}>
-                <ProductsList products={_cartData?.items} />
+                <ProductsList products={cart?.items} />
               </Stack>
 
               <OrderTotals
                 subtotal={intl.formatNumber(
-                  parseFloat(_cartData?.summary?.subtotalPrice ?? '0'),
+                  parseFloat(cart?.summary?.subtotalPrice ?? '0'),
                   currencyFormatConfig
                 )}
                 deliveryTitle={intl.formatMessage({
@@ -87,21 +78,28 @@ export const BagSummaryMobile = ({
                   id: 'cart.summary.shipping.free',
                 })}
                 tax={intl.formatNumber(
-                  parseFloat(_cartData?.summary?.taxes ?? '0'),
+                  parseFloat(cart?.summary?.taxes ?? '0'),
                   currencyFormatConfig
                 )}
                 totalTitle={intl.formatMessage({
                   id: 'checkout.orderSummary.orderTotal',
                 })}
                 total={intl.formatNumber(
-                  parseFloat(_cartData?.summary?.grandPrice ?? '0'),
+                  parseFloat(cart?.summary?.totalPrice ?? '0'),
                   currencyFormatConfig
                 )}
                 totalDiscountAmountTitle={intl.formatMessage({
                   id: 'cart.summary.totalDiscountAmount',
                 })}
                 totalDiscountAmount={intl.formatNumber(
-                  parseFloat(_cartData?.summary?.discountAmount ?? '0'),
+                  parseFloat(cart?.summary?.discountAmount ?? '0'),
+                  currencyFormatConfig
+                )}
+                grandPriceTitle={intl.formatMessage({
+                  id: 'cart.summary.grandPrice',
+                })}
+                grandPrice={intl.formatNumber(
+                  parseFloat(cart?.summary?.grandPrice ?? '0'),
                   currencyFormatConfig
                 )}
               />

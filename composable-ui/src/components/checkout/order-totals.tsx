@@ -1,6 +1,5 @@
 import { Divider, Flex, Stack, Text, TextProps } from '@chakra-ui/react'
 import { useIntl } from 'react-intl'
-import { Price } from '../price'
 
 interface OrderTotalsProps {
   subtotal: string
@@ -31,12 +30,7 @@ export const OrderTotals = ({
   const intl = useIntl()
 
   return (
-    <Stack
-      spacing="xs"
-      mt="lg"
-      divider={<Divider />}
-      px={{ base: 4, md: 'none' }}
-    >
+    <Stack spacing="xs" divider={<Divider />} px={{ base: 4, md: 'none' }}>
       <Stack spacing="xxxs">
         <CartSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.subtotal' })}
