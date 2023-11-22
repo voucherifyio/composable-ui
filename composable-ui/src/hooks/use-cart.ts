@@ -10,7 +10,7 @@ import {
   LOCAL_STORAGE_CART_ID,
   LOCAL_STORAGE_CART_UPDATED_AT,
 } from 'utils/constants'
-import { CartWithDiscounts } from '@composable/types'
+import { CartWithDiscounts, Cart } from '@composable/types'
 import { useSession } from 'next-auth/react'
 
 const USE_CART_KEY = 'useCartKey'
@@ -39,7 +39,17 @@ interface UseCartOptions {
   onCartCouponDeleteError?: () => void
   onCartItemUpdateError?: () => void
   onCartItemDeleteError?: () => void
-  onCartCouponAddSuccess?: (response: { cart: CartWithDiscounts }) => void
+  onCartCouponAddSuccess?: (
+    data: {
+      cart: CartWithDiscounts | Cart
+      result: boolean
+    },
+    variables: {
+      cartId: string
+      coupon: string
+    },
+    context: unknown
+  ) => void
   onCartCouponDeleteSuccess?: (cart: CartWithDiscounts) => void
   onCartItemAddSuccess?: (cart: CartWithDiscounts) => void
 }
@@ -270,7 +280,7 @@ export const useCart = (options?: UseCartOptions) => {
   const cartCouponAddMutation = useCallback(
     async (params: { cartId: string; coupon: string }) => {
       const id = cartId ? cartId : await cartCreate.mutateAsync()
-      await cartCouponAdd.mutate(
+      cartCouponAdd.mutate(
         {
           cartId: id,
           coupon: params.coupon,
