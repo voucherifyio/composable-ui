@@ -19,7 +19,6 @@ export const CouponForm = () => {
   const {
     register,
     handleSubmit,
-    setError,
     setValue,
     formState: { errors },
   } = useForm<{ coupon: string }>({
@@ -73,7 +72,7 @@ export const CouponForm = () => {
           flexDirection={'row'}
           alignItems={'flex-start'}
           justifyContent={'center'}
-          height={'60px'}
+          height={'3em'}
           gap={3}
         >
           <InputField
@@ -96,7 +95,13 @@ export const CouponForm = () => {
           />
         </Box>
         {errorMessage && (
-          <Alert mt={2} status="warning" borderRadius={'6px'}>
+          <Alert
+            mt={1}
+            status="warning"
+            borderRadius={'6px'}
+            p={'0.4rem'}
+            fontSize={'15px'}
+          >
             <AlertIcon alignSelf={'flex-start'} />
             {errorMessage}
           </Alert>
