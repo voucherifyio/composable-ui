@@ -22,6 +22,8 @@ import { CartDrawerFooter } from './cart-drawer-footer'
 import { CartDrawerSummary } from './cart-drawer-summary'
 import { CartDrawerEmptyState } from './cart-drawer-empty-state'
 import { HorizontalProductCard } from '@composable/ui'
+import { CouponForm } from '../../forms/coupon-form'
+import { CartPromotions } from '../cart-promotions'
 
 export const CartDrawer = () => {
   const intl = useIntl()
@@ -46,6 +48,11 @@ export const CartDrawer = () => {
     currency: APP_CONFIG.CURRENCY_CODE,
     style: 'currency',
   }
+
+  const promotions =
+    cart.redeemables?.filter(
+      (redeemable) => redeemable.object === 'promotion_tier'
+    ) || []
 
   useEffect(() => {
     router.events.on('routeChangeStart', cartDrawer.onClose)
@@ -147,6 +154,14 @@ export const CartDrawer = () => {
                     </Box>
                   )
                 })}
+              </Stack>
+              {promotions.length > 0 && (
+                <Stack bg="shading.100" p={'0.7rem 1.5rem'} mb={'-5'}>
+                  <CartPromotions promotions={promotions} />
+                </Stack>
+              )}
+              <Stack bg="shading.100" p={'0.7rem 1.5rem'} mb={'-5'}>
+                <CouponForm />
               </Stack>
               <CartDrawerSummary />
             </Stack>

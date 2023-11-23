@@ -27,13 +27,13 @@ export const CartDrawerFooter = () => {
               color={'text-muted'}
               textStyle={{ base: 'Mobile/Eyebrow', md: 'Desktop/Body-XS' }}
             >
-              {intl.formatMessage({ id: 'cart.summary.estimatedTotal' })}
+              {intl.formatMessage({ id: 'cart.summary.grandPrice' })}
             </Text>
           </Box>
           <Box>
             <Price
               rootProps={{ textStyle: { base: 'Mobile/XS', md: 'Desktop/M' } }}
-              price={cart.summary?.totalPrice ?? ''}
+              price={cart.summary?.grandPrice ?? ''}
             />
           </Box>
         </VStack>

@@ -9,6 +9,10 @@ interface OrderTotalsProps {
   discount?: string
   totalTitle?: string
   total: string
+  totalDiscountAmountTitle?: string
+  totalDiscountAmount?: string
+  grandPriceTitle?: string
+  grandPrice?: string
 }
 
 export const OrderTotals = ({
@@ -16,19 +20,17 @@ export const OrderTotals = ({
   deliveryTitle,
   delivery,
   tax,
-  discount,
   totalTitle,
   total,
+  totalDiscountAmountTitle,
+  totalDiscountAmount,
+  grandPriceTitle,
+  grandPrice,
 }: OrderTotalsProps) => {
   const intl = useIntl()
 
   return (
-    <Stack
-      spacing="xs"
-      mt="lg"
-      divider={<Divider />}
-      px={{ base: 4, md: 'none' }}
-    >
+    <Stack spacing="xs" divider={<Divider />} px={{ base: 4, md: 'none' }}>
       <Stack spacing="xxxs">
         <CartSummaryItem
           label={intl.formatMessage({ id: 'cart.summary.subtotal' })}
@@ -47,22 +49,28 @@ export const OrderTotals = ({
           label={intl.formatMessage({ id: 'cart.summary.tax' })}
           value={tax}
         />
-        {discount && (
+        <Divider />
+        <CartSummaryItem label={totalTitle ?? ''} value={total} />
+        {totalDiscountAmount && (
           <CartSummaryItem
+            label={totalDiscountAmountTitle ?? ''}
+            value={totalDiscountAmount}
+            textProps={{ color: 'green' }}
             isDiscount
-            label={intl.formatMessage({ id: 'cart.summary.discount' })}
-            value={discount}
+          />
+        )}
+        <Divider />
+        {grandPrice && (
+          <CartSummaryItem
+            label={grandPriceTitle ?? ''}
+            value={grandPrice}
+            textProps={{
+              fontSize: 'base',
+              fontWeight: 'extrabold',
+            }}
           />
         )}
       </Stack>
-      <CartSummaryItem
-        label={totalTitle ?? ''}
-        value={total}
-        textProps={{
-          fontSize: 'base',
-          fontWeight: 'extrabold',
-        }}
-      />
     </Stack>
   )
 }
@@ -79,7 +87,10 @@ const CartSummaryItem = (props: CartSummaryItemProps) => {
   return (
     <Flex justify="space-between" fontSize="sm">
       <Text {...textProps}>{label}</Text>
-      <Text {...textProps} color={isDiscount ? 'red' : undefined}>
+      <Text
+        {...textProps}
+        color={isDiscount ? textProps?.color ?? 'red' : undefined}
+      >
         {isDiscount && '-'}
         {value}
       </Text>

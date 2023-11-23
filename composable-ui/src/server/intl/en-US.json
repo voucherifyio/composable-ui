@@ -85,6 +85,7 @@
   "action.selectCountry": "Select Country",
   "action.send": "Send",
   "action.signIn": "Sign In",
+  "action.addCoupon": "Add Coupon",
   "action.signOut": "Log Out",
   "action.signup": "Sign Up",
   "action.startShopping": "Start Shopping",
@@ -117,14 +118,19 @@
 
   "cart.summary.estimatedTotal": "Estimated Total",
   "cart.summary.orderTotal": "Order Total",
+  "cart.summary.totalDiscountAmount": "All discounts",
+  "cart.summary.promotions": "Promotions",
+  "cart.summary.grandPrice": "Grand Total",
   "cart.summary.shipping.complimentaryDelivery": "Complimentary Delivery",
   "cart.summary.shipping.free": "Free",
   "cart.summary.shipping": "Complimentary Delivery",
   "cart.summary.subtotal": "Subtotal",
   "cart.summary.tax": "Tax",
   "cart.summary.taxes": "Taxes",
+  "cart.summary.couponCodes": "Coupon Codes",
   "cart.summary.title": "Order Summary",
   "cart.summary.total": "Total",
+  "cart.summary.label.coupon": "Coupon code",
 
   "checkout.title": "Checkout",
 
@@ -185,6 +191,8 @@
   "checkout.success.orderDetails.shippingAddress": "Shipping Address",
   "checkout.success.orderSummary.title": "Order Summary",
   "checkout.success.orderSummary.totalPaid": "Total Paid",
+  "checkout.success.orderSummary.orderTotal": "Order Total",
+  "checkout.success.orderSummary.totalDiscountAmount": "All discounts",
 
   "product.returnPolicy.title": "Return Policy",
   "product.returnsAndShippingPolicy.title": "Return & Shipping",

@@ -15,6 +15,8 @@ import { FormatNumberOptions, useIntl } from 'react-intl'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
+import { CartPromotions } from '../cart/cart-promotions'
+import { CouponForm } from '../forms/coupon-form'
 
 export interface CheckoutSidebarProps {
   itemsBoxProps?: AccordionProps
@@ -34,6 +36,11 @@ export const OrderSummary = ({
     currency: APP_CONFIG.CURRENCY_CODE,
     style: 'currency',
   }
+
+  const promotions =
+    cart.redeemables?.filter(
+      (redeemable) => redeemable.object === 'promotion_tier'
+    ) || []
 
   const numItems = _cart.items?.reduce((acc, cur) => acc + cur.quantity, 0)
 
@@ -87,10 +94,18 @@ export const OrderSummary = ({
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-
+        {promotions.length > 0 && (
+          <Stack bg="shading.100" p={'1rem 1.5rem'}>
+            <CartPromotions promotions={promotions} />
+          </Stack>
+        )}
+        <Stack bg="shading.100" p={'1rem 1.5rem'}>
+          <CouponForm />
+        </Stack>
+        <Divider mb="-5" />
         <OrderTotals
           subtotal={intl.formatNumber(
-            parseFloat(_cart?.summary?.subtotalPrice ?? '0'),
+            parseFloat(cart?.summary?.subtotalPrice ?? '0'),
             currencyFormatConfig
           )}
           deliveryTitle={intl.formatMessage({
@@ -98,14 +113,28 @@ export const OrderSummary = ({
           })}
           delivery={intl.formatMessage({ id: 'cart.summary.shipping.free' })}
           tax={intl.formatNumber(
-            parseFloat(_cart?.summary?.taxes ?? '0'),
+            parseFloat(cart?.summary?.taxes ?? '0'),
             currencyFormatConfig
           )}
           totalTitle={intl.formatMessage({
             id: 'checkout.orderSummary.orderTotal',
           })}
           total={intl.formatNumber(
-            parseFloat(_cart?.summary?.totalPrice ?? '0'),
+            parseFloat(cart?.summary?.totalPrice || '0'),
+            currencyFormatConfig
+          )}
+          totalDiscountAmountTitle={intl.formatMessage({
+            id: 'cart.summary.totalDiscountAmount',
+          })}
+          totalDiscountAmount={intl.formatNumber(
+            parseFloat(cart?.summary?.totalDiscountAmount || '0'),
+            currencyFormatConfig
+          )}
+          grandPriceTitle={intl.formatMessage({
+            id: 'cart.summary.grandPrice',
+          })}
+          grandPrice={intl.formatNumber(
+            parseFloat(cart?.summary?.grandPrice || '0'),
             currencyFormatConfig
           )}
         />

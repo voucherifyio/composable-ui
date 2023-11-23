@@ -11,7 +11,7 @@ import {
 import { FormatNumberOptions, useIntl } from 'react-intl'
 import { Section } from '@composable/ui'
 import { CartEmptyState, CartLoadingState } from '../cart'
-import { useCart, useCheckout } from '../../hooks'
+import { useCart } from '../../hooks'
 import { APP_CONFIG } from '../../utils/constants'
 import { OrderTotals } from './order-totals'
 import { ProductsList } from './products-list'
@@ -23,8 +23,6 @@ interface BagSummaryMobileProps {
 export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
   const intl = useIntl()
   const { cart } = useCart()
-  const { cartSnapshot } = useCheckout()
-  const _cart = cart.isEmpty ? cartSnapshot : cart
 
   const currencyFormatConfig: FormatNumberOptions = {
     currency: APP_CONFIG.CURRENCY_CODE,
@@ -38,25 +36,25 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
           <Text flex="1" textAlign="left" textStyle="Desktop/Body-S">
             {intl.formatMessage(
               {
-                id: _cart?.quantity
+                id: cart?.quantity
                   ? 'cart.drawer.titleCount'
                   : 'cart.drawer.title',
               },
-              { count: _cart?.quantity }
+              { count: cart?.quantity }
             )}{' '}
             <AccordionIcon />
           </Text>
           <Text textStyle={'Desktop/S'}>
             {intl.formatNumber(
-              parseFloat(_cart?.summary?.totalPrice || '0'),
+              parseFloat(cart?.summary?.grandPrice || '0'),
               currencyFormatConfig
             )}
           </Text>
         </AccordionButton>
         <AccordionPanel p={'0'}>
-          {_cart?.isLoading ? (
+          {cart?.isLoading ? (
             <CartLoadingState />
-          ) : _cart?.isEmpty ? (
+          ) : cart?.isEmpty ? (
             <CartEmptyState />
           ) : (
             <Section
@@ -65,12 +63,12 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
               }}
             >
               <Stack spacing="2" borderBottomWidth={1}>
-                <ProductsList products={_cart?.items} />
+                <ProductsList products={cart?.items} />
               </Stack>
 
               <OrderTotals
                 subtotal={intl.formatNumber(
-                  parseFloat(_cart?.summary?.subtotalPrice ?? '0'),
+                  parseFloat(cart?.summary?.subtotalPrice ?? '0'),
                   currencyFormatConfig
                 )}
                 deliveryTitle={intl.formatMessage({
@@ -80,14 +78,28 @@ export const BagSummaryMobile = ({ accordionProps }: BagSummaryMobileProps) => {
                   id: 'cart.summary.shipping.free',
                 })}
                 tax={intl.formatNumber(
-                  parseFloat(_cart?.summary?.taxes ?? '0'),
+                  parseFloat(cart?.summary?.taxes ?? '0'),
                   currencyFormatConfig
                 )}
                 totalTitle={intl.formatMessage({
                   id: 'checkout.orderSummary.orderTotal',
                 })}
                 total={intl.formatNumber(
-                  parseFloat(_cart?.summary?.totalPrice ?? '0'),
+                  parseFloat(cart?.summary?.totalPrice ?? '0'),
+                  currencyFormatConfig
+                )}
+                totalDiscountAmountTitle={intl.formatMessage({
+                  id: 'cart.summary.totalDiscountAmount',
+                })}
+                totalDiscountAmount={intl.formatNumber(
+                  parseFloat(cart?.summary?.discountAmount ?? '0'),
+                  currencyFormatConfig
+                )}
+                grandPriceTitle={intl.formatMessage({
+                  id: 'cart.summary.grandPrice',
+                })}
+                grandPrice={intl.formatNumber(
+                  parseFloat(cart?.summary?.grandPrice ?? '0'),
                   currencyFormatConfig
                 )}
               />

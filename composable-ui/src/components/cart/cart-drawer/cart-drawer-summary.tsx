@@ -47,19 +47,43 @@ export const CartDrawerSummary = () => {
       <Divider m={'10px 0'} />
 
       {cart.summary?.totalPrice && (
+        <CartDrawerSummaryItem
+          label={intl.formatMessage({ id: 'cart.summary.orderTotal' })}
+        >
+          <Box>
+            <Price
+              rootProps={{ textStyle: 'Desktop/XS' }}
+              price={cart.summary.totalPrice}
+            />
+          </Box>
+        </CartDrawerSummaryItem>
+      )}
+
+      {cart.summary?.totalDiscountAmount && (
+        <CartDrawerSummaryItem
+          label={intl.formatMessage({ id: 'cart.summary.totalDiscountAmount' })}
+        >
+          <Box>
+            <Price
+              rootProps={{
+                textStyle: 'Body-XS',
+                color: 'green',
+              }}
+              price={`-${cart.summary.totalDiscountAmount}`}
+            />
+          </Box>
+        </CartDrawerSummaryItem>
+      )}
+      <Divider m={'10px 0'} />
+      {cart.summary?.grandPrice && (
         <>
           <Flex
             justify="space-between"
             textStyle={{ base: 'Mobile/S', md: 'Desktop/S' }}
           >
-            <Text>
-              {intl.formatMessage({ id: 'cart.summary.estimatedTotal' })}
-            </Text>
+            <Text>{intl.formatMessage({ id: 'cart.summary.grandPrice' })}</Text>
             <Box>
-              <Price
-                rootProps={{ textStyle: 'Desktop/S' }}
-                price={cart.summary.totalPrice}
-              />
+              <Price price={cart.summary.grandPrice} />
             </Box>
           </Flex>
         </>

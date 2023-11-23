@@ -59,7 +59,11 @@ export const stripeRouter = createTRPCRouter({
       const cart = await commerce.getCart({ cartId: input.cartId })
       return await stripeProvider.createPaymentIntent({
         amount: parseInt(
-          (parseFloat(cart?.summary.totalPrice ?? '0') * 100).toString()
+          (
+            parseFloat(
+              cart?.summary.grandPrice ?? cart?.summary.totalPrice ?? '0'
+            ) * 100
+          ).toString()
         ),
         currency: APP_CONFIG.CURRENCY_CODE,
         customer: input.customerId,
